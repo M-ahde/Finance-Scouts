@@ -1,41 +1,47 @@
-import React from "react";
-import { createRoot } from "react-dom/client";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { ThemeProvider } from "@mui/material/styles";
-import theme from "./theme/theme";
+import { Toaster } from "@/client/components/ui/toaster";
+import { Toaster as Sonner } from "@/client/components/ui/sonner";
+import { TooltipProvider } from "@/client/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import '@/client/lib/i18n';
 
-import "./app.css";
-import Header from "./components/Header";
-import NewContact from "./pages/NewContact";
-import Contacts from "./pages/Contacts";
-import ContactDetail from "./pages/ContactDetail";
-import Tasks from "./pages/Tasks";
-import Projects from "./pages/Projects";
-import NotFound from "./pages/NotFound";
 import Home from "./pages/Home";
+import About from "./pages/About";
+import Goals from "./pages/Goals";
+import Vision from "./pages/Vision";
+import Team from "./pages/Team";
+import Roadmap from "./pages/Roadmap";
+import Achievements from "./pages/Achievements";
+import Publications from "./pages/Publications";
+import Workshops from "./pages/Workshops";
+import Join from "./pages/Join";
+import NotFound from "./pages/NotFound";
 
-const root = document.getElementById("root");
-if (root !== null) {
-  const appRoot = createRoot(root);
-  appRoot.render(
-    <React.Fragment>
-      <ToastContainer position="bottom-right" theme="dark" />
-      <ThemeProvider theme={theme}>
-        <BrowserRouter>
-          <Header />
-          <Routes>
-            <Route path="/" element={<Home key="home" />} />
-            <Route path="/contacts" element={<Contacts key="contacts" />} />
-            <Route path="/new-contact" element={<NewContact key="new-contact" />} />
-            <Route path="/contact/:id" element={<ContactDetail key="contact-detail" />} key="contact-detail"></Route>
-            <Route path="/tasks" element={<Tasks key="tasks" />} />
-            <Route path="/projects" element={<Projects key="projects" />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
-      </ThemeProvider>
-    </React.Fragment>
-  );
-}
+const queryClient = new QueryClient();
+
+const App = () => (
+  <QueryClientProvider client={queryClient}>
+    <TooltipProvider>
+      <Toaster />
+      <Sonner />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/goals" element={<Goals />} />
+          <Route path="/vision" element={<Vision />} />
+          <Route path="/team" element={<Team />} />
+          <Route path="/roadmap" element={<Roadmap />} />
+          <Route path="/achievements" element={<Achievements />} />
+          <Route path="/publications" element={<Publications />} />
+          <Route path="/workshops" element={<Workshops />} />
+          <Route path="/join" element={<Join />} />
+          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </BrowserRouter>
+    </TooltipProvider>
+  </QueryClientProvider>
+);
+
+export default App;

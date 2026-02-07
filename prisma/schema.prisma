@@ -1,84 +1,47 @@
-datasource db {
-  provider = "postgresql"
-}
-
 generator client {
-  provider        = "prisma-client-js"
-  previewFeatures = ["postgresqlExtensions"]
+  provider = "prisma-client-js"
 }
 
-model Contact {
-  id        Int      @id @default(autoincrement())
-  firstName String
-  lastName  String
-  email     String   @unique
-  phone     String?
-  company   String?
-  notes     String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relationships
-  tasks     Task[]
-  projects  ProjectMember[]
+datasource db {
+  provider = "mongodb"
 }
 
-model Task {
-  id          Int        @id @default(autoincrement())
+model Achievement {
+  id          String   @id @map("_id") @default(auto()) @db.ObjectId
   title       String
-  description String?
-  status      TaskStatus @default(TODO)
-  priority    Priority   @default(MEDIUM)
-  dueDate     DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  // Relationships
-  assigneeId Int?
-  assignee   Contact? @relation(fields: [assigneeId], references: [id])
-  projectId  Int?
-  project    Project? @relation(fields: [projectId], references: [id])
+  date        String
+  description String
 }
 
-model Project {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String?
-  status      String   @default("active")
-  startDate   DateTime @default(now())
-  endDate     DateTime?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relationships
-  tasks   Task[]
-  members ProjectMember[]
+model Workshop {
+  id          String   @id @map("_id") @default(auto()) @db.ObjectId
+  title       String
+  date        String
+  time        String
+  location    String
+  description String
 }
 
-model ProjectMember {
-  id        Int     @id @default(autoincrement())
-  role      String  @default("member")
-  joinedAt  DateTime @default(now())
-
-  // Relationships
-  contactId Int
-  contact   Contact @relation(fields: [contactId], references: [id])
-  projectId Int
-  project   Project @relation(fields: [projectId], references: [id])
-
-  @@unique([contactId, projectId])
+model JoinForm {
+  id         String @id @map("_id") @default(auto()) @db.ObjectId
+  fullName   String
+  email      String
+  major      String
+  year       String
+  motivation String
 }
 
-enum TaskStatus {
-  TODO
-  IN_PROGRESS
-  REVIEW
-  DONE
+model TeamMember {
+  id    String @id @map("_id") @default(auto()) @db.ObjectId
+  name  String
+  role  String
+  dept  String
 }
 
-enum Priority {
-  LOW
-  MEDIUM
-  HIGH
-  URGENT
+
+model RoadmapPhase {
+  id      String   @id @map("_id") @default(auto()) @db.ObjectId
+  title   String
+  period  String
+  items   String[]
 }

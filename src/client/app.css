@@ -1,31 +1,147 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cairo:wght@300;400;500;600;700&display=swap');
 
-body {
-  margin: auto;
-  font-family: "Roboto", sans-serif;
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-/* AppHeroIcon.css */
-.icon-container {
-  position: relative;
-  display: inline-block;
-}
+@layer base {
+  :root {
+    /* Finance Theme - Professional Navy & Emerald */
+    --background: 210 20% 98%;
+    --foreground: 215 25% 15%;
 
-.light-bar {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 10%;
-  background: rgba(255, 255, 255, 0.8);
-  animation: moveLightBar 2s linear infinite;
-}
+    --card: 0 0% 100%;
+    --card-foreground: 215 25% 15%;
 
-@keyframes moveLightBar {
-  0% {
-    left: -10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 215 25% 15%;
+
+    /* Deep Navy Blue - Primary */
+    --primary: 213 56% 24%;
+    --primary-foreground: 210 40% 98%;
+
+    /* Slate Gray - Secondary */
+    --secondary: 215 16% 47%;
+    --secondary-foreground: 210 40% 98%;
+
+    /* Soft Gray - Muted */
+    --muted: 210 20% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Emerald Green - Accent */
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 214 20% 90%;
+    --input: 214 20% 90%;
+    --ring: 213 56% 24%;
+
+    --radius: 0.5rem;
+
+    /* Finance specific tokens */
+    --finance-navy: 213 56% 24%;
+    --finance-navy-light: 213 45% 35%;
+    --finance-slate: 215 16% 47%;
+    --finance-emerald: 160 84% 39%;
+    --finance-emerald-light: 160 70% 45%;
+    --finance-gold: 45 93% 47%;
+    --finance-blue: 210 80% 50%;  
+
+    --sidebar-background: 213 56% 24%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 213 45% 35%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 213 45% 30%;
+    --sidebar-ring: 160 84% 39%;
   }
-  100% {
-    left: 100%;
+
+  .dark {
+    --background: 215 25% 10%;
+    --foreground: 210 40% 98%;
+
+    --card: 215 25% 12%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 215 25% 12%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 210 40% 98%;
+    --primary-foreground: 213 56% 24%;
+
+    --secondary: 215 20% 25%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 215 20% 20%;
+    --muted-foreground: 215 16% 60%;
+
+    --accent: 160 84% 39%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 215 20% 20%;
+    --input: 215 20% 20%;
+    --ring: 160 84% 39%;
+
+    --sidebar-background: 215 25% 8%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 160 84% 39%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 215 20% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 215 20% 15%;
+    --sidebar-ring: 160 84% 39%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* RTL Support */
+  [dir="rtl"] body {
+    font-family: 'Cairo', sans-serif;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .gradient-primary {
+    @apply bg-gradient-to-r from-primary to-primary/80;
+  }
+
+  .gradient-accent {
+    @apply bg-gradient-to-r from-accent to-accent/80;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .container-padding {
+    @apply px-4 md:px-6 lg:px-8;
   }
 }

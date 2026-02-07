@@ -1,0 +1,329 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About Us",
+    "goals": "Our Goals",
+    "vision": "Vision & Mission",
+    "team": "Team Structure",
+    "roadmap": "Roadmap",
+    "achievements": "Achievements",
+    "publications": "Publications",
+    "workshops": "Workshops",
+    "join": "Join Us"
+  },
+  "home": {
+    "hero": {
+      "title": "Finance Scouts",
+      "subtitle": "Faculty of Economics & Business Administration",
+      "description": "Empowering students with financial knowledge and practical skills for a successful future in the world of finance.",
+      "joinBtn": "Join the Team",
+      "exploreBtn": "Explore Our Work"
+    },
+    "workshops": {
+      "title": "Upcoming Workshops",
+      "subtitle": "Enhance your skills with our expert-led sessions",
+      "viewAll": "View All Workshops"
+    },
+    "stats": {
+      "members": "Team Members",
+      "workshops": "Workshops Held",
+      "publications": "Publications",
+      "years": "Years Active"
+    }
+  },
+  "about": {
+    "title": "About Us",
+    "subtitle": "Learn more about our team and mission",
+    "description": "The Finance Scouts is a dynamic student organization within the Faculty of Economics and Business Administration. We are dedicated to bridging the gap between academic knowledge and real-world financial practices.",
+    "affiliation": {
+      "title": "University Affiliation",
+      "description": "We operate under the guidance of the Faculty of Economics and Business Administration, collaborating with professors and industry professionals to deliver high-quality educational experiences."
+    },
+    "whatWeDo": {
+      "title": "What We Do",
+      "items": [
+        "Organize educational workshops and seminars",
+        "Publish research papers and financial guides",
+        "Host networking events with industry professionals",
+        "Provide mentorship for aspiring finance students"
+      ]
+    }
+  },
+  "goals": {
+    "title": "Our Goals",
+    "subtitle": "What we strive to achieve",
+    "items": [
+      {
+        "title": "Financial Literacy",
+        "description": "Promote financial literacy among university students through accessible education and resources."
+      },
+      {
+        "title": "Practical Experience",
+        "description": "Provide hands-on experience with real-world financial tools, analyses, and market simulations."
+      },
+      {
+        "title": "Professional Network",
+        "description": "Build connections between students and finance industry professionals for career opportunities."
+      },
+      {
+        "title": "Research Excellence",
+        "description": "Encourage and support student research in finance, economics, and business administration."
+      },
+      {
+        "title": "Community Impact",
+        "description": "Extend our reach to the broader community through financial awareness programs."
+      },
+      {
+        "title": "Innovation",
+        "description": "Stay at the forefront of fintech and modern financial practices."
+      }
+    ]
+  },
+  "vision": {
+    "title": "Our Vision",
+    "subtitle": "Where we're heading",
+    "statement": "To be the leading student finance organization, shaping future financial leaders through education, innovation, and community engagement.",
+    "missionTitle": "Our Mission",
+    "missionSubtitle": "How we achieve our vision",
+    "mission": "We empower students with comprehensive financial knowledge, practical skills, and professional networks. Through workshops, publications, and collaborative projects, we prepare the next generation of finance professionals to excel in a dynamic global economy.",
+    "values": {
+      "title": "Our Core Values",
+      "items": [
+        {
+          "title": "Excellence",
+          "description": "Striving for the highest standards in everything we do"
+        },
+        {
+          "title": "Integrity",
+          "description": "Upholding ethical practices and transparency"
+        },
+        {
+          "title": "Collaboration",
+          "description": "Working together to achieve greater impact"
+        },
+        {
+          "title": "Innovation",
+          "description": "Embracing new ideas and technologies"
+        }
+      ]
+    }
+  },
+  "team": {
+    "title": "Team Structure",
+    "subtitle": "Meet our dedicated team members",
+    "leadership": {
+      "title": "Leadership",
+      "president": "President",
+      "vicePresident": "Vice President",
+      "secretary": "Secretary",
+      "treasurer": "Treasurer"
+    },
+    "departments": {
+      "title": "Departments",
+      "research": {
+        "name": "Research & Publications",
+        "description": "Leading research initiatives and publishing educational content"
+      },
+      "events": {
+        "name": "Events & Workshops",
+        "description": "Planning and executing workshops, seminars, and networking events"
+      },
+      "marketing": {
+        "name": "Marketing & Communications",
+        "description": "Managing social media, branding, and external communications"
+      },
+      "hr": {
+        "name": "Human Resources",
+        "description": "Recruitment, member development, and team culture"
+      },
+      "tech": {
+        "name": "Technology & Innovation",
+        "description": "Digital tools, website management, and fintech initiatives"
+      }
+    }
+  },
+  "roadmap": {
+    "title": "Our Roadmap",
+    "subtitle": "Our journey and future plans",
+    "phases": [
+      {
+        "title": "Foundation Phase",
+        "period": "Q1 2024",
+        "items": ["Team formation", "Core structure establishment", "Initial planning"]
+      },
+      {
+        "title": "Growth Phase",
+        "period": "Q2 2024",
+        "items": ["First workshop series", "Member recruitment drive", "Partnership development"]
+      },
+      {
+        "title": "Expansion Phase",
+        "period": "Q3 2024",
+        "items": ["Research publication launch", "Inter-university collaborations", "Industry mentorship program"]
+      },
+      {
+        "title": "Excellence Phase",
+        "period": "Q4 2024",
+        "items": ["Annual finance conference", "Alumni network launch", "International partnerships"]
+      }
+    ]
+  },
+  "achievements": {
+    "title": "Previous Achievements",
+    "subtitle": "Milestones we're proud of",
+    "items": [
+      {
+        "title": "Financial Literacy Workshop",
+        "date": "March 2024",
+        "description": "Successfully hosted a workshop with 150+ attendees on personal finance management."
+      },
+      {
+        "title": "Investment Guide Publication",
+        "date": "February 2024",
+        "description": "Published our first comprehensive guide for beginner investors."
+      },
+      {
+        "title": "Industry Partnership",
+        "date": "January 2024",
+        "description": "Established partnership with leading financial institutions for student internships."
+      },
+      {
+        "title": "Stock Market Simulation",
+        "date": "December 2023",
+        "description": "Organized a university-wide stock market simulation competition."
+      }
+    ]
+  },
+  "publications": {
+    "title": "Booklets & Publications",
+    "subtitle": "Educational resources for finance enthusiasts",
+    "downloadBtn": "Download",
+    "items": [
+      {
+        "title": "Beginner's Guide to Investing",
+        "description": "A comprehensive introduction to investment fundamentals.",
+        "type": "PDF Guide"
+      },
+      {
+        "title": "Financial Planning 101",
+        "description": "Essential strategies for personal financial management.",
+        "type": "E-Book"
+      },
+      {
+        "title": "Market Analysis Report",
+        "description": "Quarterly analysis of market trends and opportunities.",
+        "type": "Report"
+      },
+      {
+        "title": "Career in Finance",
+        "description": "Pathways and opportunities in the finance industry.",
+        "type": "Career Guide"
+      }
+    ]
+  },
+  "workshops": {
+    "title": "Workshops & Announcements",
+    "subtitle": "Stay updated with our latest events",
+    "upcoming": "Upcoming Events",
+    "announcements": "Announcements",
+    "registerBtn": "Register Now",
+    "learnMore": "Learn More",
+    "events": [
+      {
+        "title": "Introduction to Technical Analysis",
+        "date": "April 15, 2024",
+        "time": "2:00 PM - 4:00 PM",
+        "location": "Room 301, Business Building",
+        "description": "Learn the basics of reading charts and identifying market patterns."
+      },
+      {
+        "title": "Portfolio Management Workshop",
+        "date": "April 22, 2024",
+        "time": "3:00 PM - 5:00 PM",
+        "location": "Conference Hall A",
+        "description": "Discover strategies for building and managing an investment portfolio."
+      },
+      {
+        "title": "Guest Speaker: Industry Insights",
+        "date": "April 29, 2024",
+        "time": "1:00 PM - 3:00 PM",
+        "location": "Main Auditorium",
+        "description": "Join us for an exclusive session with a leading finance professional."
+      }
+    ],
+    "news": [
+      {
+        "title": "New Partnership Announced",
+        "date": "April 1, 2024",
+        "description": "We're excited to announce our new partnership with ABC Financial Services."
+      },
+      {
+        "title": "Member Applications Open",
+        "date": "March 28, 2024",
+        "description": "Applications for new team members are now open. Join us today!"
+      }
+    ]
+  },
+  "join": {
+    "title": "Join Our Team",
+    "subtitle": "Become part of something meaningful",
+    "description": "We're always looking for passionate students to join our team. Whether you're interested in research, events, marketing, or technology, there's a place for you.",
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "Enter your full name",
+      "email": "Email Address",
+      "emailPlaceholder": "your.email@university.edu",
+      "major": "Major / Field of Study",
+      "majorPlaceholder": "e.g., Finance, Economics, Business",
+      "year": "Academic Year",
+      "yearPlaceholder": "Select your academic year",
+      "years": {
+        "first": "First Year",
+        "second": "Second Year",
+        "third": "Third Year",
+        "fourth": "Fourth Year",
+        "graduate": "Graduate Student"
+      },
+      "motivation": "Why do you want to join?",
+      "motivationPlaceholder": "Tell us about your interest in finance and what you hope to contribute to the team...",
+      "submit": "Submit Application",
+      "submitting": "Submitting..."
+    },
+    "success": {
+      "title": "Application Submitted!",
+      "message": "Thank you for your interest in joining our team. We will review your application and get back to you soon."
+    },
+    "benefits": {
+      "title": "Why Join Us?",
+      "items": [
+        "Gain practical experience in finance",
+        "Network with industry professionals",
+        "Develop leadership and teamwork skills",
+        "Access exclusive workshops and resources",
+        "Build your professional portfolio"
+      ]
+    }
+  },
+  "footer": {
+    "description": "Empowering students with financial knowledge and practical skills.",
+    "quickLinks": "Quick Links",
+    "contact": "Contact Us",
+    "email": "finance.team@university.edu",
+    "location": "Faculty of Economics & Business Administration",
+    "followUs": "Follow Us",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "readMore": "Read More",
+    "viewAll": "View All",
+    "backToHome": "Back to Home"
+  },
+  "navGroups": {
+  "General": "General"
+  ,
+  "Projects": "Projects"
+  ,
+  "Team":   "Team"
+  
+}
+}

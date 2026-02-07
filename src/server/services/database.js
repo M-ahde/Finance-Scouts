@@ -1,50 +1,34 @@
-/**
- * Database Service (Prisma 7+)
- * ==============================
- *
- * Singleton pattern for PrismaClient to ensure single database connection.
- * Prisma 7 uses the adapter pattern for direct database connections.
- */
-
 import dotenv from "dotenv";
 dotenv.config();
 
 import pkg from "@prisma/client";
 const { PrismaClient } = pkg;
 
-import { PrismaPg } from "@prisma/adapter-pg";
-import pg from "pg";
-
-const { Pool } = pg;
-
-/**
- * Database class to handle Prisma client instance.
- */
 class Database {
+  prisma;
+
   constructor() {
-    if (Database.instance) {
-      return Database.instance;
+    if ((global ).prismaInstance) {
+      return (global).prismaInstance;
     }
 
-    // Create PostgreSQL connection pool
-    const pool = new Pool({
-      connectionString: process.env.DATABASE_URL,
-    });
-
-    // Create Prisma adapter
-    const adapter = new PrismaPg(pool);
-
     /**
-     * Initialize PrismaClient with the PostgreSQL adapter
+     * Prisma 7+ requires an "accelerateUrl" or "adapter" for the client.
+     * For MongoDB, we use the built-in adapter automatically via the URL
+     * by providing `datasources` option.
      */
     this.prisma = new PrismaClient({
+      datasources: {
+        db: {
+          url: process.env.DATABASE_URL,
+        },
+      },
       errorFormat: "minimal",
-      adapter,
+      log: ["query", "error"],
     });
-    Database.instance = this;
+
+    (global ).prismaInstance = this;
   }
 }
 
 export default new Database();
-
-
