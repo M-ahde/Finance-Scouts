@@ -6,10 +6,16 @@
     "paths": {
       "@/*": ["./src/*"]
     },
+    "outDir": "dist",
+    "module": "ESNext",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "moduleResolution": "node",
+    "allowJs": true,
+    "strict": true,
     "noImplicitAny": false,
     "noUnusedParameters": false,
     "skipLibCheck": true,
-    "allowJs": true,
     "noUnusedLocals": false,
     "strictNullChecks": false
   }
