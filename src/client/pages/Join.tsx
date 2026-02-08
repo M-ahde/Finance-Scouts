@@ -25,7 +25,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/client/components/ui/select';
-
+import { createJoinRequest } from '@/client/services/joinRequest';
 const formSchema = z.object({
   fullName: z.string().min(2).max(100),
   email: z.string().email().max(255),
@@ -53,10 +53,15 @@ export default function Join() {
     },
   });
 
-  const onSubmit = (data: FormValues) => {
-    console.log('Form submitted:', data);
-    setIsSubmitted(true);
-  };
+const onSubmit = async (data: FormValues) => {
+  try {
+    await createJoinRequest(data); // إرسال البيانات إلى الـ API
+    setIsSubmitted(true); // عرض رسالة النجاح
+  } catch (error: any) {
+    console.error("Join request failed:", error.message);
+    alert(error.message); // عرض رسالة خطأ بسيطة
+  }
+};
 
   return (
     <PageLayout>

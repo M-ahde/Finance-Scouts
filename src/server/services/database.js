@@ -1,34 +1,25 @@
 import dotenv from "dotenv";
 dotenv.config();
 
-import pkg from "@prisma/client";
-const { PrismaClient } = pkg;
+import mongoose from "mongoose";
 
-class Database {
-  prisma;
+export async function connectDatabase() {
+  const uri = process.env.MONGO_URI ;
 
-  constructor() {
-    if ((global ).prismaInstance) {
-      return (global).prismaInstance;
-    }
+  try {
+    await mongoose.connect(uri);
 
-    /**
-     * Prisma 7+ requires an "accelerateUrl" or "adapter" for the client.
-     * For MongoDB, we use the built-in adapter automatically via the URL
-     * by providing `datasources` option.
-     */
-    this.prisma = new PrismaClient({
-      datasources: {
-        db: {
-          url: process.env.DATABASE_URL,
-        },
-      },
-      errorFormat: "minimal",
-      log: ["query", "error"],
-    });
-
-    (global ).prismaInstance = this;
+    console.log("✅ MongoDB Connected Successfully");
+  } catch (error) {
+    console.error("❌ MongoDB Connection Failed:", error.message);
+    process.exit(1);
   }
-}
 
-export default new Database();
+  mongoose.connection.on("disconnected", () => {
+    console.warn("⚠️ MongoDB Disconnected");
+  });
+
+  mongoose.connection.on("reconnected", () => {
+    console.log("🔄 MongoDB Reconnected");
+  });
+}
