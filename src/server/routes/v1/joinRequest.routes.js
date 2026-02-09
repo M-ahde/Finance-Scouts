@@ -1,9 +1,9 @@
 import { Router } from "express";
-import * as c from "../../controllers/teamMember.controller.ts";
+import * as c from "../../controllers/joinRequest.controller.js";
 
 const router = Router();
 
-router.get("/", c.getAll);
 router.post("/", c.create);
+router.get("/", c.getAll);
 
 export default router;

@@ -1,9 +1,9 @@
 import { Router } from "express";
-import * as c from "../../controllers/joinRequest.controller.ts";
+import * as c from "../../controllers/workshop.controller.js";
 
 const router = Router();
 
-router.post("/", c.create);
 router.get("/", c.getAll);
+router.post("/", c.create);
 
 export default router;
