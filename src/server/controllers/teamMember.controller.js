@@ -1,4 +1,4 @@
-import * as Service from "../services/teamMember.service.ts";
+import * as Service from "../services/teamMember.service.js";
 
 export const getAll = async (_, res) =>
   res.json(await Service.getAll());

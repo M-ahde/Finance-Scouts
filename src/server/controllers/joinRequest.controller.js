@@ -1,4 +1,4 @@
-import * as Service from "../services/joinRequest.service.ts";
+import * as Service from "../services/joinRequest.service.js";
 
 export const create = async (req, res) =>
   res.status(201).json(await Service.create(req.body));
