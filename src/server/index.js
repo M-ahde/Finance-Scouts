@@ -29,7 +29,10 @@ import config from "./config/index.js";
 // ============================================================================
 
 const app = express();
+app.set('trust proxy', true);
+import { connectDatabase } from "./services/database.js";
 
+connectDatabase();
 // Apply security middleware (helmet, rate limiting)
 app.use(securityMiddleware);
 
