@@ -5,12 +5,12 @@ import errorHandler from "strong-error-handler";
 // import projectRoutes from "./project.route.js";
 
 
-import roadmapRoutes from "./roadmap.routes.ts";
-import achievementRoutes from "./achievement.routes.ts";
-import joinRequestRoutes from "./joinRequest.routes.ts";
-import teamMemberRoutes from "./teamMember.routes.ts";
-import departmentRoutes from "./department.routes.ts";
-import workshopRoutes from "./workshop.routes.ts";
+import roadmapRoutes from "./roadmap.routes.js";
+import achievementRoutes from "./achievement.routes.js";
+import joinRequestRoutes from "./joinRequest.routes.js";
+import teamMemberRoutes from "./teamMember.routes.js";
+import departmentRoutes from "./department.routes.js";
+import workshopRoutes from "./workshop.routes.js";
 
 import { connectDatabase } from "../../services/database.js";
 
