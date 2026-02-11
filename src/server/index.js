@@ -29,7 +29,7 @@ import config from "./config/index.js";
 // ============================================================================
 
 const app = express();
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 import { connectDatabase } from "./services/database.js";
 
 connectDatabase();
