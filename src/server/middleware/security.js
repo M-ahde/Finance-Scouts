@@ -1,5 +1,6 @@
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
+import config from "../config/index.js";
 
 /**
  * Array of security middleware functions
@@ -12,8 +13,8 @@ export const securityMiddleware = [
 
   // Rate limiting to prevent abuse
   rateLimit({
-    windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 100, // limit each IP to 100 requests per windowMs
+    windowMs: config.security.rateLimitWindowMs,
+    max: config.security.rateLimitMax,
     message: "Too many requests from this IP, please try again later",
   }),
 ];
