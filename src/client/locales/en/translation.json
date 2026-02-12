@@ -1,5 +1,7 @@
 {
   "nav": {
+    "Projects": "Team Programs",
+    "Team": "Our Team",
     "home": "Home",
     "about": "About Us",
     "goals": "Our Goals",
@@ -14,78 +16,69 @@
   "home": {
     "hero": {
       "title": "Finance Scouts",
-      "subtitle": "Faculty of Economics & Business Administration",
-      "description": "Empowering students with financial knowledge and practical skills for a successful future in the world of finance.",
+      "subtitle": "College of Business Administration",
+      "description": "We empower students with financial knowledge and practical skills for a successful future in the world of finance.",
       "joinBtn": "Join the Team",
-      "exploreBtn": "Explore Our Work"
+      "exploreBtn": "Discover Us"
     },
     "workshops": {
       "title": "Upcoming Workshops",
-      "subtitle": "Enhance your skills with our expert-led sessions",
+      "subtitle": "Develop your skills through our specialized sessions",
       "viewAll": "View All Workshops"
     },
     "stats": {
       "members": "Team Members",
-      "workshops": "Workshops Held",
+      "workshops": "Workshops Conducted",
       "publications": "Publications",
-      "years": "Years Active"
+      "years": "Active Years"
     }
   },
   "about": {
     "title": "About Us",
     "subtitle": "Learn more about our team and mission",
-    "description": "The Finance Scouts is a dynamic student organization within the Faculty of Economics and Business Administration. We are dedicated to bridging the gap between academic knowledge and real-world financial practices.",
+    "description": "The Finance Scouts Team is a student organization affiliated with the Department of Finance and Banking at the College of Business Administration, Imam Abdulrahman Bin Faisal University. The team seeks to promote financial literacy among students, support innovation and financial knowledge, and build an effective bridge between academia and the professional sector.\n\nThe team was established under the supervision of the Head of the Department, Dr. Dina Qabouri, and includes a distinguished group of male and female students interested in the financial field within a specialized organizational structure. The team was officially launched on April 30, 2024, in the presence of the Dean of the College, Dr. Faisal Al-Hadithi. It aims to contribute to the development of the financial sector in alignment with Saudi Vision 2030.",
     "affiliation": {
       "title": "University Affiliation",
-      "description": "We operate under the guidance of the Faculty of Economics and Business Administration, collaborating with professors and industry professionals to deliver high-quality educational experiences."
+      "description": "We operate under the supervision of the College of Economics and Administration, in collaboration with professors and industry professionals to deliver high-quality educational experiences."
     },
     "whatWeDo": {
       "title": "What We Do",
       "items": [
         "Organize educational workshops and seminars",
-        "Publish research papers and financial guides",
-        "Host networking events with industry professionals",
-        "Provide mentorship for aspiring finance students"
+        "Host networking events with finance professionals",
+        "Provide guidance to students aspiring to pursue careers in finance"
       ]
     }
   },
   "goals": {
     "title": "Our Goals",
-    "subtitle": "What we strive to achieve",
+    "subtitle": "What We Strive to Achieve",
     "items": [
       {
         "title": "Financial Literacy",
-        "description": "Promote financial literacy among university students through accessible education and resources."
+        "description": "Promoting financial literacy among students in a practical and engaging manner."
       },
       {
-        "title": "Practical Experience",
-        "description": "Provide hands-on experience with real-world financial tools, analyses, and market simulations."
+        "title": "Financial Analysis Skills",
+        "description": "Developing financial analysis skills and the ability to make sound financial decisions."
       },
       {
-        "title": "Professional Network",
-        "description": "Build connections between students and finance industry professionals for career opportunities."
+        "title": "Innovation & Entrepreneurship",
+        "description": "Supporting innovation and entrepreneurship within the financial sector."
       },
       {
-        "title": "Research Excellence",
-        "description": "Encourage and support student research in finance, economics, and business administration."
-      },
-      {
-        "title": "Community Impact",
-        "description": "Extend our reach to the broader community through financial awareness programs."
-      },
-      {
-        "title": "Innovation",
-        "description": "Stay at the forefront of fintech and modern financial practices."
+        "title": "Empowered Generation",
+        "description": "Preparing a generation of students capable of facing the challenges of the financial and banking job market."
       }
     ]
   },
   "vision": {
     "title": "Our Vision",
-    "subtitle": "Where we're heading",
-    "statement": "To be the leading student finance organization, shaping future financial leaders through education, innovation, and community engagement.",
+    "subtitle": "Where We Are Headed",
+    "statement": "To build a generation of finance and banking students who possess financial awareness and the ability to manage their resources efficiently and responsibly, contributing effectively to the development of the financial sector.\n\nWe work to empower students to become leaders and innovators in the financial field, driven by our belief that Saudi youth are a powerful force for change. Through supporting innovation and entrepreneurship in alignment with the objectives of Saudi Vision 2030, we strive to create a sustainable impact in the world of finance and business.",
     "missionTitle": "Our Mission",
-    "missionSubtitle": "How we achieve our vision",
-    "mission": "We empower students with comprehensive financial knowledge, practical skills, and professional networks. Through workshops, publications, and collaborative projects, we prepare the next generation of finance professionals to excel in a dynamic global economy.",
+    "missionSubtitle": "How We Achieve Our Vision",
+    "mission": "Qualifying finance and banking students by investing in their skills and building their professional and financial futures with competence and awareness, in alignment with the objectives of Saudi Vision 2030.\n\nWe aim to guide students in understanding labor market transformations and exploring high-quality opportunities in the financial and banking sector, while strengthening financial awareness and professional analysis. Through innovative programs and events, we are committed to supporting them in making sound and sustainable financial decisions and creating a meaningful impact in their academic and professional journeys.",
     "values": {
       "title": "Our Core Values",
       "items": [
@@ -109,73 +102,76 @@
     }
   },
   "team": {
-    "title": "Team Structure",
-    "subtitle": "Meet our dedicated team members",
+    "title": "Our Team",
+    "subtitle": "We are committed to delivering the best educational and professional experience to our members",
     "leadership": {
-      "title": "Leadership",
+      "title": "Team Leadership",
       "president": "President",
       "vicePresident": "Vice President",
       "secretary": "Secretary",
       "treasurer": "Treasurer"
     },
     "departments": {
-      "title": "Departments",
-      "research": {
-        "name": "Research & Publications",
-        "description": "Leading research initiatives and publishing educational content"
+      "media": {
+        "name": "Media Committee",
+        "description": "Managing communication channels and publishing team news and activities."
       },
-      "events": {
-        "name": "Events & Workshops",
-        "description": "Planning and executing workshops, seminars, and networking events"
+      "pr": {
+        "name": "Public Relations Committee",
+        "description": "Building relationships with universities, institutions, and partners."
       },
-      "marketing": {
-        "name": "Marketing & Communications",
-        "description": "Managing social media, branding, and external communications"
+      "content": {
+        "name": "Content Writing Committee",
+        "description": "Preparing and writing educational and awareness content for the team."
       },
-      "hr": {
-        "name": "Human Resources",
-        "description": "Recruitment, member development, and team culture"
+      "design": {
+        "name": "Design Committee",
+        "description": "Designing posters, logos, and digital presentations for the team."
       },
-      "tech": {
-        "name": "Technology & Innovation",
-        "description": "Digital tools, website management, and fintech initiatives"
+      "management": {
+        "name": "Management Committee",
+        "description": "Organizing internal operations and overseeing tasks and projects."
+      },
+      "documentation": {
+        "name": "Documentation Committee",
+        "description": "Preparing official reports for the team’s activities and initiatives."
       }
     }
   },
   "roadmap": {
-    "title": "Our Roadmap",
-    "subtitle": "Our journey and future plans",
+    "title": "Roadmap",
+    "subtitle": "Our Journey and Future Plans",
     "phases": [
       {
         "title": "Foundation Phase",
         "period": "Q1 2024",
-        "items": ["Team formation", "Core structure establishment", "Initial planning"]
+        "items": ["Team Formation", "Establishing the Core Structure", "Initial Planning"]
       },
       {
         "title": "Growth Phase",
         "period": "Q2 2024",
-        "items": ["First workshop series", "Member recruitment drive", "Partnership development"]
+        "items": ["First Workshop Series", "Member Recruitment Campaign", "Partnership Development"]
       },
       {
         "title": "Expansion Phase",
         "period": "Q3 2024",
-        "items": ["Research publication launch", "Inter-university collaborations", "Industry mentorship program"]
+        "items": ["Launching Research Publications", "Inter-University Collaboration", "Career Mentorship Program"]
       },
       {
         "title": "Excellence Phase",
         "period": "Q4 2024",
-        "items": ["Annual finance conference", "Alumni network launch", "International partnerships"]
+        "items": ["Annual Finance Conference", "Alumni Network Launch", "International Partnerships"]
       }
     ]
   },
   "achievements": {
-    "title": "Previous Achievements",
-    "subtitle": "Milestones we're proud of",
+    "title": "Past Achievements",
+    "subtitle": "Milestones We Are Proud Of",
     "items": [
       {
         "title": "Financial Literacy Workshop",
         "date": "March 2024",
-        "description": "Successfully hosted a workshop with 150+ attendees on personal finance management."
+        "description": "Successfully hosted a workshop attended by more than 150 participants on personal finance management."
       },
       {
         "title": "Investment Guide Publication",
@@ -185,7 +181,7 @@
       {
         "title": "Industry Partnership",
         "date": "January 2024",
-        "description": "Established partnership with leading financial institutions for student internships."
+        "description": "Established a partnership with leading financial institutions for student training."
       },
       {
         "title": "Stock Market Simulation",
@@ -196,35 +192,35 @@
   },
   "publications": {
     "title": "Booklets & Publications",
-    "subtitle": "Educational resources for finance enthusiasts",
+    "subtitle": "Educational Resources for Finance Enthusiasts",
     "downloadBtn": "Download",
     "items": [
       {
-        "title": "Beginner's Guide to Investing",
+        "title": "Beginner’s Guide to Investing",
         "description": "A comprehensive introduction to investment fundamentals.",
         "type": "PDF Guide"
       },
       {
         "title": "Financial Planning 101",
-        "description": "Essential strategies for personal financial management.",
-        "type": "E-Book"
+        "description": "Essential strategies for managing personal finances.",
+        "type": "E-book"
       },
       {
         "title": "Market Analysis Report",
-        "description": "Quarterly analysis of market trends and opportunities.",
+        "description": "A quarterly analysis of market trends and opportunities.",
         "type": "Report"
       },
       {
-        "title": "Career in Finance",
-        "description": "Pathways and opportunities in the finance industry.",
+        "title": "Careers in Finance",
+        "description": "Career paths and opportunities in the finance industry.",
         "type": "Career Guide"
       }
     ]
   },
   "workshops": {
     "title": "Workshops & Announcements",
-    "subtitle": "Stay updated with our latest events",
-    "upcoming": "Upcoming Events",
+    "subtitle": "Stay Updated with Our Latest Events",
+"upcoming": "Upcoming Workshops",
     "announcements": "Announcements",
     "registerBtn": "Register Now",
     "learnMore": "Learn More",
@@ -234,7 +230,7 @@
         "date": "April 15, 2024",
         "time": "2:00 PM - 4:00 PM",
         "location": "Room 301, Business Building",
-        "description": "Learn the basics of reading charts and identifying market patterns."
+        "description": "Learn the fundamentals of reading charts and identifying market patterns."
       },
       {
         "title": "Portfolio Management Workshop",
@@ -247,83 +243,103 @@
         "title": "Guest Speaker: Industry Insights",
         "date": "April 29, 2024",
         "time": "1:00 PM - 3:00 PM",
-        "location": "Main Auditorium",
+        "location": "Main Hall",
         "description": "Join us for an exclusive session with a leading finance professional."
       }
     ],
     "news": [
       {
-        "title": "New Partnership Announced",
+        "title": "New Partnership Announcement",
         "date": "April 1, 2024",
-        "description": "We're excited to announce our new partnership with ABC Financial Services."
+        "description": "We are pleased to announce our new partnership with ABC Financial Services."
       },
       {
-        "title": "Member Applications Open",
+        "title": "Applications Now Open",
         "date": "March 28, 2024",
-        "description": "Applications for new team members are now open. Join us today!"
+        "description": "Team membership applications are now available. Join us today!"
       }
     ]
   },
   "join": {
-    "title": "Join Our Team",
-    "subtitle": "Become part of something meaningful",
-    "description": "We're always looking for passionate students to join our team. Whether you're interested in research, events, marketing, or technology, there's a place for you.",
-    "form": {
-      "fullName": "Full Name",
-      "fullNamePlaceholder": "Enter your full name",
-      "email": "Email Address",
-      "emailPlaceholder": "your.email@university.edu",
-      "major": "Major / Field of Study",
-      "majorPlaceholder": "e.g., Finance, Economics, Business",
-      "year": "Academic Year",
-      "yearPlaceholder": "Select your academic year",
-      "years": {
-        "first": "First Year",
-        "second": "Second Year",
-        "third": "Third Year",
-        "fourth": "Fourth Year",
-        "graduate": "Graduate Student"
-      },
-      "motivation": "Why do you want to join?",
-      "motivationPlaceholder": "Tell us about your interest in finance and what you hope to contribute to the team...",
-      "submit": "Submit Application",
-      "submitting": "Submitting..."
-    },
+    "title": "Join Us",
+    "subtitle": "Be part of our team and contribute to excellence.",
     "success": {
-      "title": "Application Submitted!",
-      "message": "Thank you for your interest in joining our team. We will review your application and get back to you soon."
+      "title": "Your Application Has Been Submitted Successfully",
+      "message": "Thank you for joining us. We will contact you soon."
+    },
+    "form": {
+      "arabicName": "Full Name in Arabic",
+      "englishName": "Full Name in English",
+      "phone": "Mobile Number",
+      "nationalId": "National ID Number",
+      "universityId": "University ID",
+      "universityEmail": "University Email",
+      "level": "Academic Level",
+      "major": "Major",
+      "committee": "Select the Appropriate Committee",
+      "selectLevel": "Select Academic Level",
+      "selectCommittee": "Select Committee",
+      "submit": "Submit Application"
     },
     "benefits": {
       "title": "Why Join Us?",
+      "description": "Join our team and benefit from a development-driven, collaborative, and innovative environment.",
       "items": [
-        "Gain practical experience in finance",
-        "Network with industry professionals",
+        "Gain practical experience in a professional environment",
         "Develop leadership and teamwork skills",
-        "Access exclusive workshops and resources",
-        "Build your professional portfolio"
+        "Participate in impactful and distinguished projects",
+        "Build a strong network within the university",
+        "Continuous training and development opportunities",
+        "Receive an official certificate of participation"
       ]
+    },
+    "committees": {
+      "management": "Management Committee",
+      "content": "Content Writing Committee",
+      "design": "Design Committee",
+      "media": "Media Committee",
+      "pr": "Public Relations Committee",
+      "documentation": "Documentation Committee"
+    },
+    "validation": {
+      "arabicName": {
+        "min": "The Arabic name must be at least 3 characters long",
+        "max": "The Arabic name must not exceed 100 characters"
+      },
+      "englishName": {
+        "min": "The English name must be at least 3 characters long",
+        "max": "The English name must not exceed 100 characters"
+      },
+      "phone": "The mobile number must start with 5 and consist of 9 digits",
+      "nationalId": {
+        "min": "The national ID number is too short",
+        "max": "The national ID number is too long"
+      },
+      "universityId": {
+        "min": "The university ID is too short",
+        "max": "The university ID is too long"
+      },
+      "universityEmail": "The university email is invalid",
+      "level": "Please select an academic level",
+      "major": {
+        "min": "The major is too short",
+        "max": "The major is too long"
+      },
+      "committee": "At least one committee must be selected"
     }
   },
   "footer": {
     "description": "Empowering students with financial knowledge and practical skills.",
     "quickLinks": "Quick Links",
     "contact": "Contact Us",
-    "email": "finance.team@university.edu",
-    "location": "Faculty of Economics & Business Administration",
+    "email": "CBA.FST@iau.edu.sa",
+    "location": "College of Business Administration",
     "followUs": "Follow Us",
-    "rights": "All rights reserved."
+    "rights": "All Rights Reserved."
   },
   "common": {
     "readMore": "Read More",
     "viewAll": "View All",
     "backToHome": "Back to Home"
-  },
-  "navGroups": {
-  "General": "General"
-  ,
-  "Projects": "Projects"
-  ,
-  "Team":   "Team"
-  
-}
+  }
 }

@@ -52,31 +52,7 @@ export default function About() {
               </p>
             </motion.div>
 
-            {/* Affiliation Card */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
-            >
-              <Card className="mb-12 overflow-hidden">
-                <CardContent className="p-0">
-                  <div className="flex flex-col md:flex-row">
-                    <div className="flex items-center justify-center bg-primary p-8 md:w-1/3">
-                      <Building2 className="h-20 w-20 text-primary-foreground" />
-                    </div>
-                    <div className="p-8 md:w-2/3">
-                      <h3 className="mb-3 text-xl font-semibold text-foreground">
-                        {t('about.affiliation.title')}
-                      </h3>
-                      <p className="text-muted-foreground">
-                        {t('about.affiliation.description')}
-                      </p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-
+   
             {/* What We Do */}
             <SectionHeader title={t('about.whatWeDo.title')} />
 

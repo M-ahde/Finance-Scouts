@@ -13,29 +13,26 @@ import {
   DropdownMenuItem,
 } from '@/client/components/ui/dropdown-menu';
 
-const navGroups = [
+const navItems = [
   {
-    title: 'General',
-    items: [
-      { key: 'home', path: '/' },
-      { key: 'about', path: '/about' },
-    ],
+    key: 'home',
+    path: '/',
   },
   {
-    title: 'Projects',
-    items: [
-      { key: 'goals', path: '/goals' },
-      { key: 'vision', path: '/vision' },
-      { key: 'roadmap', path: '/roadmap' },
+    key: 'Projects',
+    subItems: [
+      { key: 'workshops', path: '/workshops' },
+      { key: 'publications', path: '/publications' },
       { key: 'achievements', path: '/achievements' },
     ],
   },
   {
-    title: 'Team',
-    items: [
+    key: 'Team',
+    subItems: [
+      { key: 'about', path: '/about' },
+      { key: 'goals', path: '/goals' },
+      { key: 'vision', path: '/vision' },
       { key: 'team', path: '/team' },
-      { key: 'workshops', path: '/workshops' },
-      { key: 'publications', path: '/publications' },
     ],
   },
 ];
@@ -75,52 +72,60 @@ export default function Navbar() {
 
 
         {/* Desktop Navigation */}
-        <div className="hidden gap-4 lg:flex">
-          {navGroups.map((group) => (
-            <DropdownMenu key={group.title}>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-1">
-                  {t(`navGroups.${group.title}`)}
-                  <ChevronDown className="h-3 w-3" />
-                </Button>
-              </DropdownMenuTrigger>
-           <DropdownMenuContent
-  align={isRTL ? 'start' : 'end'}
-  className="bg-popover/95 p-4 min-w-[220px] rounded-lg shadow-2xl"
->
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    transition={{ duration: 0.25 }}
-  >
-    <h3 className="mb-3 text-lg font-bold text-foreground border-b border-border/30 pb-2">
-      {t(`navGroups.${group.title}`)}
-    </h3>
-<div className="flex flex-col gap-1">
-  {group.items.map((item) => (
-    <DropdownMenuItem key={item.key} asChild>
+     <div className="hidden gap-4 lg:flex">
+  {navItems.map((item) =>
+    item.subItems ? (
+      <DropdownMenu key={item.key}>
+        <DropdownMenuTrigger asChild>
+          <Button variant="ghost" size="sm" className="gap-1">
+            {t(`nav.${item.key}`)}
+            <ChevronDown className="h-3 w-3" />
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align={isRTL ? 'start' : 'end'}
+          className="bg-popover/95 p-4 min-w-[220px] rounded-lg shadow-2xl"
+        >
+          <div className="flex flex-col gap-1">
+            {item.subItems.map((sub) => (
+              <DropdownMenuItem key={sub.key} asChild>
+                <Link
+                  to={sub.disabled ? '#' : sub.path}
+                  onClick={(e) => sub.disabled && e.preventDefault()}
+                  className={cn(
+                    'flex w-full items-center px-3 py-2 rounded transition-colors',
+                    sub.disabled
+                      ? 'pointer-events-none opacity-30 cursor-not-allowed'
+                      : 'hover:bg-muted hover:text-foreground',
+                    location.pathname === sub.path
+                      ? 'bg-muted font-semibold text-foreground'
+                      : 'text-muted-foreground'
+                  )}
+                >
+                  {t(`nav.${sub.key}`)}
+                </Link>
+              </DropdownMenuItem>
+            ))}
+          </div>
+        </DropdownMenuContent>
+      </DropdownMenu>
+    ) : (
       <Link
+        key={item.key}
         to={item.path}
         className={cn(
-          'flex w-full items-center px-3 py-2 rounded transition-colors',
-          'hover:bg-muted hover:text-foreground',
+          'px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-muted',
           location.pathname === item.path
-            ? 'bg-muted font-semibold text-foreground'
+            ? 'bg-muted text-foreground font-semibold'
             : 'text-muted-foreground'
         )}
       >
         {t(`nav.${item.key}`)}
       </Link>
-    </DropdownMenuItem>
-  ))}
+    )
+  )}
 </div>
 
-  </motion.div>
-</DropdownMenuContent>
-
-            </DropdownMenu>
-          ))}
-        </div>
 
         {/* Right Side Actions */}
         <div className="flex items-center gap-2">

@@ -10,10 +10,9 @@ import WorkshopCard from '@/client/components/ui/WorkshopCard';
 import { useLanguage } from '@/client/hooks/useLanguage';
 
 const stats = [
-  { key: 'members', value: '50+', icon: Users },
-  { key: 'workshops', value: '20+', icon: Calendar },
-  { key: 'publications', value: '10+', icon: BookOpen },
-  { key: 'years', value: '3+', icon: Award },
+  { key: 'members', value: '100+', icon: Users },
+  { key: 'workshops', value: '30+', icon: Calendar },
+  { key: 'years', value: '2+', icon: Award },
 ];
 
 export default function Home() {
@@ -126,7 +125,7 @@ export default function Home() {
       {/* Stats Section */}
       <section className="border-b border-border bg-background py-12">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-3">
             {stats.map((stat, index) => (
               <motion.div
                 key={stat.key}

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Mail, MapPin, Facebook, Twitter, Linkedin, Instagram } from 'lucide-react';
-
+import { FaXTwitter } from "react-icons/fa6";
 const quickLinks = [
   { key: 'about', path: '/about' },
   { key: 'goals', path: '/goals' },
@@ -11,10 +11,10 @@ const quickLinks = [
 ];
 
 const socialLinks = [
-  { icon: Facebook, href: '#', label: 'Facebook' },
-  { icon: Twitter, href: '#', label: 'Twitter' },
-  { icon: Linkedin, href: '#', label: 'LinkedIn' },
-  { icon: Instagram, href: '#', label: 'Instagram' },
+  //{ icon: Facebook, href: '#', label: 'Facebook' },
+  { icon: FaXTwitter, href: 'https://x.com/fst_iau?s=21', label: 'Twitter' },
+  { icon: Linkedin, href: 'https://www.linkedin.com/company/finance-scouts/', label: 'LinkedIn' },
+  { icon: Instagram, href: 'https://www.instagram.com/fst_iau?igsh=ZXdieGgzOHA3bWVw', label: 'Instagram' },
 ];
 
 export default function Footer() {
@@ -78,14 +78,29 @@ export default function Footer() {
               {t('footer.contact')}
             </h3>
             <ul className="space-y-3">
-              <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
-                <Mail className="h-4 w-4" />
-                <span>{t('footer.email')}</span>
-              </li>
-              <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
-                <MapPin className="h-4 w-4" />
-                <span>{t('footer.location')}</span>
-              </li>
+        <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
+  <a
+    href={`mailto:${t('footer.email')}`}
+    className="flex items-center gap-2 hover:opacity-80 transition"
+  >
+    <Mail className="h-4 w-4" />
+    <span>{t('footer.email')}</span>
+  </a>
+</li>
+
+              
+            <li className="flex items-center gap-2 text-sm text-primary-foreground/80">
+  <a
+    href="https://maps.app.goo.gl/gESx6RvQys8Wsuro9"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="flex items-center gap-2 hover:opacity-80 transition"
+  >
+    <MapPin className="h-4 w-4" />
+    <span>{t('footer.location')}</span>
+  </a>
+</li>
+
             </ul>
           </div>
 
@@ -100,7 +115,9 @@ export default function Footer() {
                   key={social.label}
                   href={social.href}
                   aria-label={social.label}
+                     target="_blank" 
                   className="flex h-10 w-10 items-center justify-center rounded-full bg-primary-foreground/10 transition-colors hover:bg-primary-foreground/20"
+                
                 >
                   <social.icon className="h-5 w-5" />
                 </a>

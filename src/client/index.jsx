@@ -10,7 +10,6 @@ import About from "./pages/About";
 import Goals from "./pages/Goals";
 import Vision from "./pages/Vision";
 import Team from "./pages/Team";
-import Roadmap from "./pages/Roadmap";
 import Achievements from "./pages/Achievements";
 import Publications from "./pages/Publications";
 import Workshops from "./pages/Workshops";
@@ -31,7 +30,6 @@ const App = () => (
           <Route path="/goals" element={<Goals />} />
           <Route path="/vision" element={<Vision />} />
           <Route path="/team" element={<Team />} />
-          <Route path="/roadmap" element={<Roadmap />} />
           <Route path="/achievements" element={<Achievements />} />
           <Route path="/publications" element={<Publications />} />
           <Route path="/workshops" element={<Workshops />} />

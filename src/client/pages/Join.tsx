@@ -8,7 +8,6 @@ import { CheckCircle, Sparkles } from 'lucide-react';
 import PageLayout from '@/client/components/layout/PageLayout';
 import { Button } from '@/client/components/ui/button';
 import { Input } from '@/client/components/ui/input';
-import { Textarea } from '@/client/components/ui/textarea';
 import { Card, CardContent } from '@/client/components/ui/card';
 import {
   Form,
@@ -26,106 +25,146 @@ import {
   SelectValue,
 } from '@/client/components/ui/select';
 import { createJoinRequest } from '@/client/services/joinRequest';
-const formSchema = z.object({
-  fullName: z.string().min(2).max(100),
-  email: z.string().email().max(255),
-  major: z.string().min(2).max(100),
-  year: z.string().min(1),
-  motivation: z.string().min(10).max(1000),
-});
+import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../components/ui/dropdown-menu';
+import { Badge } from '../components/ui/badge';
+
+
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Join() {
   const { t } = useTranslation();
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
   const benefits = t('join.benefits.items', { returnObjects: true }) as string[];
 
-  const form = useForm<FormValues>({
-    resolver: zodResolver(formSchema),
-    defaultValues: {
-      fullName: '',
-      email: '',
-      major: '',
-      year: '',
-      motivation: '',
-    },
-  });
+const formSchema = z.object({
+  arabicName: z
+    .string()
+    .min(3, t("join.validation.arabicName.min"))
+    .max(100, t("join.validation.arabicName.max")),
+
+  englishName: z
+    .string()
+    .min(3, t("join.validation.englishName.min"))
+    .max(100, t("join.validation.englishName.max")),
+
+  phone: z
+    .string()
+    .regex(/^5\d{8}$/, t("join.validation.phone")),
+
+  nationalId: z
+    .string()
+    .min(5, t("join.validation.nationalId.min"))
+    .max(20, t("join.validation.nationalId.max")),
+
+  universityId: z
+    .string()
+    .min(3, t("join.validation.universityId.min"))
+    .max(20, t("join.validation.universityId.max")),
+
+  universityEmail: z
+    .string()
+    .email(t("join.validation.universityEmail")),
+
+  level: z
+    .string()
+    .min(1, t("join.validation.level")),
+
+  major: z
+    .string()
+    .min(2, t("join.validation.major.min"))
+    .max(100, t("join.validation.major.max")),
+
+  committee: z
+    .array(z.string())
+    .min(1, t("join.validation.committee")),
+});
+
+  const [isSubmitted, setIsSubmitted] = useState(false);
+const form = useForm<FormValues>({
+  resolver: zodResolver(formSchema),
+  defaultValues: {
+    arabicName: '',
+    englishName: '',
+    phone: '',
+    nationalId: '',
+    universityId: '',
+    universityEmail: '',
+    level: '',
+    major: '',
+    committee: [],
+  },
+});
+
 
 const onSubmit = async (data: FormValues) => {
   try {
-    await createJoinRequest(data); // إرسال البيانات إلى الـ API
-    setIsSubmitted(true); // عرض رسالة النجاح
+    const formattedData = {
+      ...data,
+      phone: `+966${data.phone}`,
+    };
+
+    await createJoinRequest(formattedData);
+    setIsSubmitted(true);
   } catch (error: any) {
-    console.error("Join request failed:", error.message);
-    alert(error.message); // عرض رسالة خطأ بسيطة
+    console.error(error);
+    alert(error.message);
   }
 };
 
+
   return (
     <PageLayout>
-      {/* Hero Section */}
+      {/* Hero */}
       <section className="bg-primary py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="mx-auto max-w-3xl text-center"
-          >
-            <h1 className="mb-4 text-4xl font-bold text-primary-foreground md:text-5xl">
+        <div className="container mx-auto px-4 text-center">
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
+            <h1 className="text-4xl font-bold text-primary-foreground md:text-5xl">
               {t('join.title')}
             </h1>
-            <p className="text-lg text-primary-foreground/80">
+            <p className="mt-4 text-lg text-primary-foreground/80">
               {t('join.subtitle')}
             </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Form Section */}
-      <section className="section-padding">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="grid gap-12 lg:grid-cols-2">
-            {/* Form */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-            >
-              {isSubmitted ? (
-                <Card className="bg-accent/5">
-                  <CardContent className="flex flex-col items-center p-12 text-center">
-                    <CheckCircle className="mb-4 h-16 w-16 text-accent" />
-                    <h2 className="mb-2 text-2xl font-bold text-foreground">
-                      {t('join.success.title')}
-                    </h2>
-                    <p className="text-muted-foreground">
-                      {t('join.success.message')}
-                    </p>
-                  </CardContent>
-                </Card>
-              ) : (
-                <Card>
-                  <CardContent className="p-8">
-                    <Form {...form}>
-                      <form
-                        onSubmit={form.handleSubmit(onSubmit)}
-                        className="space-y-6"
-                      >
+      {/* Form + Benefits */}
+      <section className="py-16">
+        
+        <div className="container mx-auto px-4 space-y-16">
+     {/* Benefits */}
+      
+          {/* Form */}
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            {isSubmitted ? (
+              <Card className="mx-auto max-w-2xl bg-accent/5">
+                <CardContent className="p-12 text-center">
+                  <CheckCircle className="mx-auto mb-4 h-16 w-16 text-accent" />
+                  <h2 className="text-2xl font-bold">
+                    {t('join.success.title')}
+                  </h2>
+                  <p className="mt-2 text-muted-foreground">
+                    {t('join.success.message')}
+                  </p>
+                </CardContent>
+              </Card>
+            ) : (
+              <Card className="mx-auto max-w-4xl">
+                <CardContent className="p-8">
+                  <Form {...form}>
+                    <form
+                      onSubmit={form.handleSubmit(onSubmit)}
+                      className="space-y-6"
+                    >
+                      <div className="grid gap-6 md:grid-cols-2">
+
                         <FormField
                           control={form.control}
-                          name="fullName"
+                          name="arabicName"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{t('join.form.fullName')}</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder={t('join.form.fullNamePlaceholder')}
-                                  {...field}
-                                />
-                              </FormControl>
+                              <FormLabel>{t('join.form.arabicName')}</FormLabel>
+                              <FormControl><Input {...field} /></FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -133,17 +172,124 @@ const onSubmit = async (data: FormValues) => {
 
                         <FormField
                           control={form.control}
-                          name="email"
+                          name="englishName"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel>{t('join.form.email')}</FormLabel>
-                              <FormControl>
-                                <Input
-                                  type="email"
-                                  placeholder={t('join.form.emailPlaceholder')}
-                                  {...field}
-                                />
-                              </FormControl>
+                              <FormLabel>{t('join.form.englishName')}</FormLabel>
+                              <FormControl><Input {...field} /></FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+<FormField
+  control={form.control}
+  name="phone"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>{t('join.form.phone')}</FormLabel>
+      <FormControl>
+        <div
+          dir="ltr"
+          className="flex w-full overflow-hidden rounded-md border focus-within:ring-2 focus-within:ring-accent"
+        >
+          {/* Country Code ثابت */}
+          <div className="flex items-center px-3 bg-muted text-muted-foreground border-r">
+            +966
+          </div>
+
+          {/* Input */}
+          <Input
+            type="tel"
+            inputMode="numeric"
+            autoComplete="tel"
+            placeholder="5XXXXXXXX"
+            className="border-0 focus-visible:ring-0 rounded-none text-left"
+            value={field.value}
+            onChange={(e) => {
+              let value = e.target.value
+
+              // إزالة أي شيء غير أرقام
+              value = value.replace(/\D/g, "")
+
+              // لو كتب 05 نحذف الصفر
+              if (value.startsWith("05")) {
+                value = value.slice(1)
+              }
+
+              // منع أكثر من 9 أرقام
+              if (value.length > 9) {
+                value = value.slice(0, 9)
+              }
+
+              field.onChange(value)
+            }}
+          />
+        </div>
+      </FormControl>
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+
+
+                        <FormField
+                          control={form.control}
+                          name="nationalId"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>{t('join.form.nationalId')}</FormLabel>
+                              <FormControl><Input {...field} /></FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="universityId"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>{t('join.form.universityId')}</FormLabel>
+                              <FormControl><Input {...field} /></FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="universityEmail"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>{t('join.form.universityEmail')}</FormLabel>
+                              <FormControl><Input type="email" {...field} /></FormControl>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
+
+                        <FormField
+                          control={form.control}
+                          name="level"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormLabel>{t('join.form.level')}</FormLabel>
+                              <Select onValueChange={field.onChange}>
+                                <FormControl>
+                                  <SelectTrigger>
+                                    <SelectValue placeholder={t('join.form.selectLevel')} />
+                                  </SelectTrigger>
+                                </FormControl>
+                                <SelectContent>
+                                  <SelectItem value="1">{t('join.levels.first')}</SelectItem>
+                                  <SelectItem value="2">{t('join.levels.second')}</SelectItem>
+                                  <SelectItem value="3">{t('join.levels.third')}</SelectItem>
+                                  <SelectItem value="4">{t('join.levels.fourth')}</SelectItem>
+                                  <SelectItem value="5">{t('join.levels.fifth')}</SelectItem>
+                                </SelectContent>
+                              </Select>
                               <FormMessage />
                             </FormItem>
                           )}
@@ -155,120 +301,87 @@ const onSubmit = async (data: FormValues) => {
                           render={({ field }) => (
                             <FormItem>
                               <FormLabel>{t('join.form.major')}</FormLabel>
-                              <FormControl>
-                                <Input
-                                  placeholder={t('join.form.majorPlaceholder')}
-                                  {...field}
-                                />
-                              </FormControl>
+                              <FormControl><Input {...field} /></FormControl>
                               <FormMessage />
                             </FormItem>
                           )}
                         />
+                      </div>
 
-                        <FormField
-                          control={form.control}
-                          name="year"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>{t('join.form.year')}</FormLabel>
-                              <Select
-                                onValueChange={field.onChange}
-                                defaultValue={field.value}
-                              >
-                                <FormControl>
-                                  <SelectTrigger>
-                                    <SelectValue
-                                      placeholder={t('join.form.yearPlaceholder')}
-                                    />
-                                  </SelectTrigger>
-                                </FormControl>
-                                <SelectContent className="bg-popover">
-                                  <SelectItem value="first">
-                                    {t('join.form.years.first')}
-                                  </SelectItem>
-                                  <SelectItem value="second">
-                                    {t('join.form.years.second')}
-                                  </SelectItem>
-                                  <SelectItem value="third">
-                                    {t('join.form.years.third')}
-                                  </SelectItem>
-                                  <SelectItem value="fourth">
-                                    {t('join.form.years.fourth')}
-                                  </SelectItem>
-                                  <SelectItem value="graduate">
-                                    {t('join.form.years.graduate')}
-                                  </SelectItem>
-                                </SelectContent>
-                              </Select>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
+ <FormField
+  control={form.control}
+  name="committee"
+  render={({ field }) => (
+    <FormItem>
+      <FormLabel>{t("join.form.committee")}</FormLabel>
 
-                        <FormField
-                          control={form.control}
-                          name="motivation"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>{t('join.form.motivation')}</FormLabel>
-                              <FormControl>
-                                <Textarea
-                                  placeholder={t('join.form.motivationPlaceholder')}
-                                  className="min-h-[120px]"
-                                  {...field}
-                                />
-                              </FormControl>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-
-                        <Button
-                          type="submit"
-                          className="w-full bg-accent text-accent-foreground hover:bg-accent/90"
-                          disabled={form.formState.isSubmitting}
-                        >
-                          {form.formState.isSubmitting
-                            ? t('join.form.submitting')
-                            : t('join.form.submit')}
-                        </Button>
-                      </form>
-                    </Form>
-                  </CardContent>
-                </Card>
-              )}
-            </motion.div>
-
-            {/* Benefits */}
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.3 }}
+      <FormControl>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="outline"
+              className="w-full min-h-[42px] justify-start flex-wrap gap-1"
             >
-              <Card className="h-full bg-primary text-primary-foreground">
-                <CardContent className="p-8">
-                  <div className="mb-6 flex items-center gap-3">
-                    <Sparkles className="h-8 w-8 text-accent" />
-                    <h2 className="text-2xl font-bold">
-                      {t('join.benefits.title')}
-                    </h2>
-                  </div>
-                  <p className="mb-8 text-primary-foreground/80">
-                    {t('join.description')}
-                  </p>
-                  <ul className="space-y-4">
-                    {benefits.map((benefit, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle className="mt-0.5 h-5 w-5 flex-shrink-0 text-accent" />
-                        <span>{benefit}</span>
-                      </li>
-                    ))}
-                  </ul>
+              {field.value?.length > 0 ? (
+                field.value.map((c: string) => (
+                  <Badge key={c} variant="secondary">
+                    {t(`join.committees.${c}`)}
+                  </Badge>
+                ))
+              ) : (
+                <span className="text-muted-foreground">
+                  {t("join.form.selectCommittee")}
+                </span>
+              )}
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent className="w-56">
+            {[
+              "management",
+              "content",
+              "design",
+              "media",
+              "pr",
+              "documentation",
+            ].map((committee) => (
+              <DropdownMenuCheckboxItem
+                key={committee}
+                checked={field.value?.includes(committee)}
+                onCheckedChange={(checked) => {
+                  const newValue = checked
+                    ? [...(field.value || []), committee]
+                    : field.value?.filter((v: string) => v !== committee)
+
+                  field.onChange(newValue)
+                }}
+              >
+                {t(`join.committees.${committee}`)}
+              </DropdownMenuCheckboxItem>
+            ))}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </FormControl>
+
+      <FormMessage />
+    </FormItem>
+  )}
+/>
+
+
+
+                      <Button type="submit" className="w-full bg-accent text-accent-foreground">
+                        {t('join.form.submit')}
+                      </Button>
+                    </form>
+                  </Form>
                 </CardContent>
               </Card>
-            </motion.div>
-          </div>
+            )}
+          </motion.div>
+
+     
+
         </div>
       </section>
     </PageLayout>
