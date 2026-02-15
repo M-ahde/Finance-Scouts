@@ -14,6 +14,7 @@ import Achievements from "./pages/Achievements";
 import Publications from "./pages/Publications";
 import Workshops from "./pages/Workshops";
 import Join from "./pages/Join";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -34,6 +35,7 @@ const App = () => (
           <Route path="/publications" element={<Publications />} />
           <Route path="/workshops" element={<Workshops />} />
           <Route path="/join" element={<Join />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -97,6 +97,11 @@ const config = {
      * Maximum requests per window per IP
      */
     rateLimitMax: 100,
+
+    /**
+     * Optional API key used to protect admin endpoints
+     */
+    adminApiKey: getEnv("ADMIN_API_KEY"),
   },
 
   /**

@@ -11,6 +11,7 @@ import joinRequestRoutes from "./joinRequest.routes.js";
 import teamMemberRoutes from "./teamMember.routes.js";
 import departmentRoutes from "./department.routes.js";
 import workshopRoutes from "./workshop.routes.js";
+import dashboardRoutes from "./dashboard.routes.js";
 
 import { connectDatabase } from "../../services/database.js";
 
@@ -24,6 +25,7 @@ router.use("/join", joinRequestRoutes);
 router.use("/team", teamMemberRoutes);
 router.use("/departments", departmentRoutes);
 router.use("/workshops", workshopRoutes);
+router.use("/dashboard", dashboardRoutes);
 
 // router.use("/contact", contactRoutes);
 // router.use("/task", taskRoutes);

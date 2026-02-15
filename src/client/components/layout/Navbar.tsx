@@ -148,6 +148,12 @@ export default function Navbar() {
             </DropdownMenuContent>
           </DropdownMenu>
 
+          <Link to="/dashboard" className="hidden sm:block">
+            <Button variant="outline" size="sm">
+              {currentLanguage === 'ar' ? 'لوحة التحكم' : 'Dashboard'}
+            </Button>
+          </Link>
+
           {/* Join Button */}
           <Link to="/join" className="hidden sm:block">
             <Button size="sm" className="bg-accent text-accent-foreground hover:bg-accent/90">

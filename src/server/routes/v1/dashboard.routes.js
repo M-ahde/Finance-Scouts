@@ -1,10 +1,9 @@
 import { Router } from "express";
+import * as c from "../../controllers/dashboard.controller.js";
 import { requireAdminApiKey } from "../../middleware/adminAuth.js";
-import * as c from "../../controllers/workshop.controller.js";
 
 const router = Router();
 
-router.get("/", c.getAll);
-router.post("/", requireAdminApiKey, c.create);
+router.get("/overview", requireAdminApiKey, c.getOverview);
 
 export default router;
