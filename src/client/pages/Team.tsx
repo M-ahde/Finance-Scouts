@@ -1,23 +1,29 @@
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
-import { Search, CalendarDays, Megaphone, Monitor, Users2 } from 'lucide-react';
 import PageLayout from '@/client/components/layout/PageLayout';
 import SectionHeader from '@/client/components/ui/SectionHeader';
 import TeamMemberCard from '@/client/components/ui/TeamMemberCard';
-import { Card, CardContent, CardHeader, CardTitle } from '@/client/components/ui/card';
-
+import { BookOpen, Briefcase, Camera, FileText, Handshake, Palette } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '../components/ui/card';
 const departments = [
-  { key: 'research', icon: Search },
-  { key: 'events', icon: CalendarDays },
-  { key: 'marketing', icon: Megaphone },
-  { key: 'hr', icon: Users2 },
-  { key: 'tech', icon: Monitor },
+  { key: 'media', icon: Camera },
+  { key: 'pr', icon: Handshake },
+  { key: 'content', icon: FileText },
+  { key: 'design', icon: Palette },
+  { key: 'management', icon: Briefcase },
+  { key: 'documentation', icon: BookOpen },
 ];
-
-const leadershipRoles = ['president', 'vicePresident', 'secretary', 'treasurer'];
-
 export default function Team() {
   const { t } = useTranslation();
+  const [teamMembers, setTeamMembers] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/v1/team')
+      .then(res => res.json())
+      .then(data => setTeamMembers(data))
+      .catch(err => console.error('Error fetching team:', err));
+  }, []);
 
   return (
     <PageLayout>
@@ -40,31 +46,30 @@ export default function Team() {
         </div>
       </section>
 
-      {/* Leadership Section */}
+      {/* Team Members Section */}
       <section className="section-padding">
         <div className="container mx-auto px-4 md:px-6">
-          <SectionHeader title={t('team.leadership.title')} />
+          <SectionHeader title={t('team.members.title')} />
 
           <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {leadershipRoles.map((role, index) => (
+            {teamMembers.map((member, index) => (
               <motion.div
-                key={role}
+                key={member._id}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <TeamMemberCard
-                  name={`${t(`team.leadership.${role}`)} Name`}
-                  role={t(`team.leadership.${role}`)}
+                  name={member.name}
+                  role={member.role}
+                  image={member.avatar}
                 />
               </motion.div>
             ))}
           </div>
         </div>
       </section>
-
-      {/* Departments Section */}
-      <section className="section-padding bg-muted/30">
+            <section className="section-padding bg-muted/30">
         <div className="container mx-auto px-4 md:px-6">
           <SectionHeader title={t('team.departments.title')} />
 

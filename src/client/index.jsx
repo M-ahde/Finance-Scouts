@@ -16,30 +16,62 @@ import Workshops from "./pages/Workshops";
 import Join from "./pages/Join";
 import NotFound from "./pages/NotFound";
 
+
+import DashboardHome from "./pages/dashboard/Home"
+import WorkshopsDashboard from "./pages/dashboard/workshops"
+import PublicationEditor from  "./pages/dashboard/Publication";
+import PublicationsPage from  "./pages/dashboard/PublicationsPage";
+import PublicationView from  "./pages/dashboard/PublicationView";
+import AchievementsDashboard from  "./pages/dashboard/Achievements";
+import DashboardLayout from "./components/dashboard/DashboardPageLayout";
+import TeamDashboard from "./pages/dashboard/TeamDashboard";
+
 const queryClient = new QueryClient();
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/goals" element={<Goals />} />
-          <Route path="/vision" element={<Vision />} />
-          <Route path="/team" element={<Team />} />
-          <Route path="/achievements" element={<Achievements />} />
-          <Route path="/publications" element={<Publications />} />
-          <Route path="/workshops" element={<Workshops />} />
-          <Route path="/join" element={<Join />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+import useRecordVisit from "@/client/hooks/useRecordVisit.ts";
+
+const App = () => {
+  useRecordVisit(); // 👈 records visit once when app loads
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/goals" element={<Goals />} />
+            <Route path="/vision" element={<Vision />} />
+            <Route path="/team" element={<Team />} />
+            <Route path="/achievements" element={<Achievements />} />
+            <Route path="/publications" element={<Publications />} />
+            <Route path="/workshops" element={<Workshops />} />
+            <Route path="/join" element={<Join />} />
+
+            {/* Dashboard routes */}
+       <Route path="/dashboard" element={<DashboardLayout />}>
+  <Route index element={<DashboardHome />} />
+  <Route path="workshop" element={<WorkshopsDashboard />} />
+  <Route path="achievements" element={<AchievementsDashboard />} />
+
+
+  <Route path="team" element={<TeamDashboard />} />
+
+  <Route path="publications">
+    <Route index element={<PublicationsPage />} />
+    <Route path="new" element={<PublicationEditor />} />
+    <Route path="edit/:id" element={<PublicationEditor />} />
+    <Route path="view/:id" element={<PublicationView />} />
+  </Route>
+</Route>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;

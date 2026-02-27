@@ -1,21 +1,22 @@
-// src/server/models/Workshop.ts
-import mongoose, { Schema } from "mongoose";
+// models/Workshop.model.js
+import mongoose from "mongoose";
 
-
-
-const WorkshopSchema = new Schema(
-  {
-    title: { type: String, required: true },
-    description: String,
-    date: { type: Date, required: true },
-    time: String,
-    location: String,
+const WorkshopSchema = new mongoose.Schema({
+  title: {
+    en: { type: String, required: true },
+    ar: { type: String, required: true },
   },
-  { timestamps: true }
-);
+  description: {
+    en: { type: String, required: true },
+    ar: { type: String, required: true },
+  },
+  date: { type: Date, required: true }, // ✅ غيرنا من String إلى Date
+  time: { type: String, required: true }, // يمكنك ترك الوقت كسلسلة أو دمجه مع التاريخ
+  location: {
+    en: { type: String, required: true },
+    ar: { type: String, required: true },
+  },
+  createdAt: { type: Date, default: Date.now },
+});
 
-const Workshop  =
-  mongoose.models.Workshop ||
-  mongoose.model("Workshop", WorkshopSchema);
-
-export default Workshop;
+export default mongoose.models.Workshop || mongoose.model("Workshop", WorkshopSchema);

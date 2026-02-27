@@ -104,14 +104,13 @@
   "team": {
     "title": "Our Team",
     "subtitle": "We are committed to delivering the best educational and professional experience to our members",
-    "leadership": {
-      "title": "Team Leadership",
-      "president": "President",
-      "vicePresident": "Vice President",
-      "secretary": "Secretary",
-      "treasurer": "Treasurer"
+  "members": {
+      "title": "Our Members"
     },
+
     "departments": {
+      "title": "Team Departments",
+   
       "media": {
         "name": "Media Committee",
         "description": "Managing communication channels and publishing team news and activities."
@@ -193,7 +192,8 @@
   "publications": {
     "title": "Booklets & Publications",
     "subtitle": "Educational Resources for Finance Enthusiasts",
-    "downloadBtn": "Download",
+    "downloadBtn": "Download", 
+     "viewBtn": "View",
     "items": [
       {
         "title": "Beginner’s Guide to Investing",

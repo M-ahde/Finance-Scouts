@@ -1,13 +1,22 @@
 // src/server/models/Achievement.ts
 import mongoose, { Schema } from "mongoose";
 
-
+const MultiLangString = {
+  en: { type: String, required: true },
+  ar: { type: String, required: true },
+};
 
 const AchievementSchema = new Schema(
   {
-    title: { type: String, required: true },
+    title: {
+      type: MultiLangString,
+      required: true,
+    },
+    description: {
+      type: MultiLangString,
+      required: true,
+    },
     date: { type: String, required: true },
-    description: { type: String, required: true },
   },
   { timestamps: true }
 );

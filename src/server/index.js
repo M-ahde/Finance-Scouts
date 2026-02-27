@@ -31,6 +31,7 @@ import config from "./config/index.js";
 const app = express();
 app.set('trust proxy', 1);
 import { connectDatabase } from "./services/database.js";
+app.use("/uploads", express.static("uploads"));
 
 connectDatabase();
 // Apply security middleware (helmet, rate limiting)

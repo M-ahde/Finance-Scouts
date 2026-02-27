@@ -5,5 +5,5 @@ const router = Router();
 
 router.post("/", c.create);
 router.get("/", c.getAll);
-
+router.get("/count", c.count);
 export default router;

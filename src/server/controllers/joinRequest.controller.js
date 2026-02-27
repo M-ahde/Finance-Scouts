@@ -5,3 +5,6 @@ export const create = async (req, res) =>
 
 export const getAll = async (_, res) =>
   res.json(await Service.getAll());
+
+export const count = async (_,res) =>
+  res.json(await Service.count());

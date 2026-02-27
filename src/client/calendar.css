@@ -1,0 +1,99 @@
+/* ===== Main Container ===== */
+.react-calendar {
+  border: none;
+  width: 100%;
+  font-family: 'Inter', sans-serif;
+  background: #ffffff;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(15, 23, 42, 0.05);
+}
+
+/* ===== Navigation (Month Header) ===== */
+.react-calendar__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding: "0 20px";
+  display: "flex";
+  align-items: "center";
+}
+
+/* Month text (THE IMPORTANT PART 🔥) */
+.react-calendar__navigation__label {
+  font-size: 18px !important;
+  font-weight: 700;
+  color: #0f172a;
+  background: linear-gradient(135deg, #1e3a8a, #2563eb);
+  -webkit-background-clip: text;
+  letter-spacing: 0.5px;
+}
+
+/* Navigation arrows */
+.react-calendar__navigation button {
+  background: #f1f5f9;
+  border-radius: 10px;
+  min-width: 36px;
+  height: 36px;
+  font-weight: 600;
+  color: #334155;
+  transition: all 0.2s ease;
+}
+
+.react-calendar__navigation button:hover {
+  background: #2563eb;
+  color: white;
+  transform: scale(1.05);
+}
+
+/* ===== Weekdays ===== */
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-size: 11px;
+  font-weight: 600;
+  color: #64748b;
+  margin-bottom: 10px;
+}
+
+/* ===== Day Tiles ===== */
+.react-calendar__tile {
+  border-radius: 12px;
+  padding: 12px 0;
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  transition: all 0.2s ease;
+  position: relative;
+}
+
+/* Hover effect */
+.react-calendar__tile:enabled:hover {
+  background: #f1f5f9;
+  transform: scale(1.06);
+}
+
+/* Today (Soft finance blue) */
+.react-calendar__tile--now {
+  background: #e0f2fe !important;
+  color: #0284c7 !important;
+  font-weight: 600;
+}
+
+/* Selected Day (Strong Corporate Blue) */
+.react-calendar__tile--active {
+  background: linear-gradient(135deg, #2563eb, #1e40af) !important;
+  color: white !important;
+  font-weight: 600;
+  box-shadow: 0 6px 18px rgba(37, 99, 235, 0.35);
+}
+
+/* Neighbor month */
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: #cbd5e1;
+}
+
+/* Remove focus outline */
+.react-calendar__tile:focus {
+  outline: none;
+}
