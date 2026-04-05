@@ -24,7 +24,9 @@
     "workshops": {
       "title": "Upcoming Workshops",
       "subtitle": "Develop your skills through our specialized sessions",
-      "viewAll": "View All Workshops"
+      "viewAll": "View All Workshops",
+      "loading": "Loading workshops...",
+      "error": "Failed to load workshops."
     },
     "stats": {
       "members": "Team Members",
@@ -36,7 +38,7 @@
   "about": {
     "title": "About Us",
     "subtitle": "Learn more about our team and mission",
-    "description": "The Finance Scouts Team is a student organization affiliated with the Department of Finance and Banking at the College of Business Administration, Imam Abdulrahman Bin Faisal University. The team seeks to promote financial literacy among students, support innovation and financial knowledge, and build an effective bridge between academia and the professional sector.\n\nThe team was established under the supervision of the Head of the Department, Dr. Dina Qabouri, and includes a distinguished group of male and female students interested in the financial field within a specialized organizational structure. The team was officially launched on April 30, 2024, in the presence of the Dean of the College, Dr. Faisal Al-Hadithi. It aims to contribute to the development of the financial sector in alignment with Saudi Vision 2030.",
+    "description": "The Finance Scouts Team is a student organization affiliated with the Department of Finance and Banking at the College of Business Administration, Imam Abdulrahman Bin Faisal University. The team seeks to promote financial literacy among students, support innovation and financial knowledge, and build an effective bridge between academia and the professional sector.\n\nThe team was established under the supervision of the Head of the Department, Dr. Dina Gabbori, and includes a distinguished group of male and female students interested in the financial field within a specialized organizational structure. The team was officially launched on April 30, 2024, in the presence of the Dean of the College, Dr. Faisal Al-Hadithi. It aims to contribute to the development of the financial sector in alignment with Saudi Vision 2030.",
     "affiliation": {
       "title": "University Affiliation",
       "description": "We operate under the supervision of the College of Economics and Administration, in collaboration with professors and industry professionals to deliver high-quality educational experiences."
@@ -281,6 +283,13 @@
       "selectCommittee": "Select Committee",
       "submit": "Submit Application"
     },
+    "levels": {
+      "first": "Level 1",
+      "second": "Level 2",
+      "third": "Level 3",
+      "fourth": "Level 4",
+      "fifth": "Level 5"
+    },
     "benefits": {
       "title": "Why Join Us?",
       "description": "Join our team and benefit from a development-driven, collaborative, and innovative environment.",
@@ -328,6 +337,20 @@
       "committee": "At least one committee must be selected"
     }
   },
+  "auth": {
+    "loginTitle": "Sign In",
+    "registerTitle": "Create Account",
+    "email": "Email Address",
+    "password": "Password",
+    "name": "Full Name",
+    "loginBtn": "Sign In",
+    "registerBtn": "Create Account",
+    "noAccount": "Don't have an account?",
+    "haveAccount": "Already have an account?",
+    "registerLink": "Register",
+    "loginLink": "Sign In",
+    "registerSuccess": "Account created successfully! Redirecting to login..."
+  },
   "footer": {
     "description": "Empowering students with financial knowledge and practical skills.",
     "quickLinks": "Quick Links",
@@ -340,6 +363,7 @@
   "common": {
     "readMore": "Read More",
     "viewAll": "View All",
-    "backToHome": "Back to Home"
+    "backToHome": "Back to Home",
+    "noData": "No data available yet."
   }
 }

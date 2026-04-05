@@ -13,6 +13,9 @@ import departmentRoutes from "./department.routes.js";
 import workshopRoutes from "./workshop.routes.js";
 import visit from "./visit.js";
 import publicationRoutes from "./publication.routes.js";
+import authRoutes from "./auth.routes.js";
+import userRoutes from "./user.routes.js";
+import eventRoutes from "./event.routes.js";
 
 const router = Router();
 
@@ -24,6 +27,9 @@ router.use("/departments", departmentRoutes);
 router.use("/workshops", workshopRoutes);
 router.use("/visit", visit);
 router.use('/publications', publicationRoutes);
+router.use("/users", userRoutes);
+router.use("/auth", authRoutes);
+router.use("/events", eventRoutes);
 // router.use("/contact", contactRoutes);
 // router.use("/task", taskRoutes);
 // router.use("/project", projectRoutes);

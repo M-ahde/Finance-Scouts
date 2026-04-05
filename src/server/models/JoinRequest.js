@@ -70,7 +70,13 @@ const JoinRequestSchema = new Schema(
         "documentation",
       ],
     },
-    
+
+    status: {
+      type: String,
+      enum: ["pending", "accepted", "denied"],
+      default: "pending",
+    },
+
   },
   { timestamps: true }
 );

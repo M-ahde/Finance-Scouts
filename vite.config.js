@@ -26,8 +26,14 @@ export default defineConfig({
     open: true,
     strictPort: true,
     proxy: {
-      "/api": `http://localhost:${process.env.PORT}`,
-      "/auth": `http://localhost:${process.env.PORT}`,
+      "/api": {
+        target: `http://localhost:${process.env.PORT || 8080}`,
+        changeOrigin: true,
+      },
+      "/uploads": {
+        target: `http://localhost:${process.env.PORT || 8080}`,
+        changeOrigin: true,
+      },
     },
   },
   preview: {

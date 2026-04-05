@@ -23,6 +23,7 @@ import { errors } from "celebrate";
 import routes from "./routes/v1/index.js";
 import { securityMiddleware, requestLogger } from "./middleware/security.js";
 import config from "./config/index.js";
+import cookieParser from "cookie-parser";
 
 // ============================================================================
 // Express App Setup
@@ -42,7 +43,7 @@ app.use(requestLogger);
 
 // Parse JSON request bodies
 app.use(express.json());
-
+app.use(cookieParser()); 
 // Enable CORS for all routes
 app.use(cors());
 
