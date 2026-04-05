@@ -269,6 +269,10 @@
       "title": "Your Application Has Been Submitted Successfully",
       "message": "Thank you for joining us. We will contact you soon."
     },
+    "error": {
+      "title": "Submission Failed",
+      "message": "Something went wrong. Please try again."
+    },
     "form": {
       "arabicName": "Full Name in Arabic",
       "englishName": "Full Name in English",

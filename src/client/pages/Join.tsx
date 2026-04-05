@@ -5,6 +5,8 @@ import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { CheckCircle, Sparkles } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 import PageLayout from '@/client/components/layout/PageLayout';
 import { Button } from '@/client/components/ui/button';
 import { Input } from '@/client/components/ui/input';
@@ -79,6 +81,7 @@ const formSchema = z.object({
     .min(1, t("join.validation.committee")),
 });
 
+  const navigate = useNavigate();
   const [isSubmitted, setIsSubmitted] = useState(false);
 const form = useForm<FormValues>({
   resolver: zodResolver(formSchema),
@@ -104,10 +107,11 @@ const onSubmit = async (data: FormValues) => {
     };
 
     await createJoinRequest(formattedData);
-    setIsSubmitted(true);
+    toast.success(t('join.success.title'), { description: t('join.success.message') });
+    setTimeout(() => navigate('/'), 1500);
   } catch (error: any) {
     console.error(error);
-    alert(error.message);
+    toast.error(t('join.error.title'), { description: error?.response?.data?.message || error.message });
   }
 };
 
