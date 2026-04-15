@@ -10,7 +10,7 @@ function getTransporter() {
       port: 587,
       secure: false,
       auth: {
-        user: "mhdexd6@gmail.com",
+        user: "noreply@finance-scouts.com",
         pass: process.env.SMTP,
       },
     });
