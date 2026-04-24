@@ -1,9 +1,6 @@
 import { Router } from "express";
 import errorHandler from "strong-error-handler";
-// import contactRoutes from "./contact.route.js";
-// import taskRoutes from "./task.route.js";
-// import projectRoutes from "./project.route.js";
-
+import { verifySMTPConnection } from "../../services/email.service.js";
 
 import roadmapRoutes from "./roadmap.routes.js";
 import achievementRoutes from "./achievement.routes.js";
@@ -30,22 +27,27 @@ router.use('/publications', publicationRoutes);
 router.use("/users", userRoutes);
 router.use("/auth", authRoutes);
 router.use("/events", eventRoutes);
-// router.use("/contact", contactRoutes);
-// router.use("/task", taskRoutes);
-// router.use("/project", projectRoutes);
 
-/**
- * GET /health
- * Health check endpoint.
- */
 router.get("/health", (req, res) => {
-  res.send("Ok");
+  res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-// Error handling middleware
+router.get("/health/email", async (req, res) => {
+  try {
+    const result = await verifySMTPConnection();
+    res.json(result);
+  } catch (err) {
+    res.status(500).json({ 
+      success: false, 
+      message: err.message,
+      code: err.code 
+    });
+  }
+});
+
 router.use(
   errorHandler({
-    debug: process.env.ENV !== "prod",
+    debug: process.env.NODE_ENV !== "production",
     log: true,
   })
 );

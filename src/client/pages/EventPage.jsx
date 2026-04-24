@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { FiClock, FiMapPin, FiCalendar, FiUsers, FiChevronRight, FiMenu, FiX } from "react-icons/fi";
-import EventRegisterModal from "@/client/components/ui/EventRegisterModal.jsx";
 
 // ─── 16 Built-in Themes ───────────────────────────────────────────
 export const THEMES = {
@@ -209,7 +208,7 @@ function useCountdown(target) {
 }
 
 // ─── Navbar ───────────────────────────────────────────────────────
-function EventNavbar({ event, t, onRegister }) {
+function EventNavbar({ event, t }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -218,6 +217,12 @@ function EventNavbar({ event, t, onRegister }) {
     window.addEventListener("scroll", fn, { passive: true });
     return () => window.removeEventListener("scroll", fn);
   }, []);
+
+  const handleRegister = () => {
+    if (event.registrationLink) {
+      window.open(event.registrationLink, "_blank", "noopener,noreferrer");
+    }
+  };
 
   const sections = [
     event.about       && { id: "about",     label: "About"    },
@@ -246,7 +251,7 @@ function EventNavbar({ event, t, onRegister }) {
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
         {/* Logo + Title */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
-          <img src="/logos/1-1.webp" alt="FS" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
+          <img src="/logos/1.webp" alt="FS" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
           <span style={{ fontWeight: 700, fontSize: 14, color: t.navText, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
             {event.title}
           </span>
@@ -264,12 +269,14 @@ function EventNavbar({ event, t, onRegister }) {
 
         <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
           {/* Register CTA */}
-          <button onClick={onRegister} className="ep-nav-register" style={{ background: t.accent, color: t.sectionBg || "#0f172a", border: "none", borderRadius: 8, padding: "7px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "opacity 0.15s" }}
-            onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
-            onMouseLeave={e => e.currentTarget.style.opacity = "1"}
-          >
-            Register →
-          </button>
+          {event.registrationLink && (
+            <button onClick={handleRegister} className="ep-nav-register" style={{ background: t.accent, color: t.sectionBg || "#0f172a", border: "none", borderRadius: 8, padding: "7px 18px", fontSize: 13, fontWeight: 700, cursor: "pointer", whiteSpace: "nowrap", transition: "opacity 0.15s" }}
+              onMouseEnter={e => e.currentTarget.style.opacity = "0.85"}
+              onMouseLeave={e => e.currentTarget.style.opacity = "1"}
+            >
+              Register →
+            </button>
+          )}
 
           {/* Mobile hamburger */}
           <button onClick={() => setMobileOpen(v => !v)} className="ep-nav-hamburger" style={{ background: "none", border: "none", cursor: "pointer", color: t.navText, padding: 4 }}>
@@ -304,7 +311,6 @@ export default function EventPage() {
   const [event,   setEvent]   = useState(null);
   const [loading, setLoading] = useState(true);
   const [error,   setError]   = useState(null);
-  const [regOpen, setRegOpen] = useState(false);
   const styleRef = useRef(null);
 
   useEffect(() => {
@@ -371,7 +377,7 @@ export default function EventPage() {
     <div id="event-page" className="ep-root" style={{ background: t.sectionBg, color: t.text, fontFamily: t.font, minHeight: "100vh" }}>
 
       {/* ── Navbar ── */}
-      <EventNavbar event={event} t={t} onRegister={() => setRegOpen(true)} />
+      <EventNavbar event={event} t={t} />
 
       {/* ══════ HERO ══════ */}
       <section className="ep-hero" style={{ background: t.hero, padding: "80px 24px 100px", position: "relative", overflow: "hidden" }} id="hero">
@@ -417,22 +423,14 @@ export default function EventPage() {
             </div>
           )}
 
-          {!countdown.over && (
+          {!countdown.over && event.registrationLink && (
             <div className="ep-cta" style={{ marginTop: 36, display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <button className="ep-register-btn" onClick={() => setRegOpen(true)} style={{ display: "inline-flex", alignItems: "center", gap: 8, background: t.accent, color: ["minimal","arctic","cream"].includes(event.design) ? "#fff" : "#0f172a", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer", boxShadow: `0 4px 20px ${t.accent}50`, transition: "transform 0.15s, box-shadow 0.15s" }}
+              <a href={event.registrationLink} target="_blank" rel="noopener noreferrer" className="ep-register-btn" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: t.accent, color: ["minimal","arctic","cream"].includes(event.design) ? "#fff" : "#0f172a", padding: "14px 36px", borderRadius: 12, fontWeight: 700, fontSize: 16, border: "none", cursor: "pointer", boxShadow: `0 4px 20px ${t.accent}50`, transition: "transform 0.15s, box-shadow 0.15s", textDecoration: "none" }}
                 onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-2px)"; e.currentTarget.style.boxShadow = `0 8px 28px ${t.accent}60`; }}
                 onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.boxShadow = `0 4px 20px ${t.accent}50`; }}
               >
                 Register for This Event →
-              </button>
-              {event.registrationLink && (
-                <a href={event.registrationLink} target="_blank" rel="noopener noreferrer" className="ep-external-btn" style={{ display: "inline-flex", alignItems: "center", gap: 8, background: "transparent", border: `1.5px solid ${t.accent}50`, color: t.text, padding: "14px 24px", borderRadius: 12, fontWeight: 600, fontSize: 15, textDecoration: "none", transition: "border-color 0.2s" }}
-                  onMouseEnter={e => e.currentTarget.style.borderColor = t.accent}
-                  onMouseLeave={e => e.currentTarget.style.borderColor = `${t.accent}50`}
-                >
-                  External Form ↗
-                </a>
-              )}
+              </a>
             </div>
           )}
         </div>
@@ -566,11 +564,11 @@ export default function EventPage() {
         <div className="ep-container" style={{ maxWidth: 960, margin: "0 auto" }}>
           <div className="ep-footer-grid" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit,minmax(200px,1fr))", gap: 40, marginBottom: 40 }}>
             <div className="ep-footer-brand">
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                <img src="/logos/1-1.webp" alt="Finance Scouts" style={{ width: 44, height: 44, borderRadius: "50%", objectFit: "cover" }} />
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginBottom: 16 }}>
+                <img src="/logos/1.webp" alt="Finance Scouts" style={{ width: 56, height: 56, borderRadius: 12, objectFit: "contain" }} />
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 15, color: "#f8fafc" }}>Finance Scouts</div>
-                  <div style={{ fontSize: 11, color: "#64748b" }}>College of Business Administration</div>
+                  <div style={{ fontWeight: 700, fontSize: 18, color: "#f8fafc" }}>Finance Scouts</div>
+                  <div style={{ fontSize: 12, color: "#64748b", marginTop: 2 }}>College of Business Administration</div>
                 </div>
               </div>
               <p style={{ fontSize: 13, color: "#64748b", lineHeight: 1.65 }}>Empowering students with financial knowledge and practical skills.</p>
@@ -599,9 +597,6 @@ export default function EventPage() {
           </div>
         </div>
       </footer>
-
-      {/* Registration modal */}
-      <EventRegisterModal open={regOpen} onClose={() => setRegOpen(false)} event={event} />
     </div>
   );
 }

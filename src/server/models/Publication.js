@@ -9,6 +9,12 @@ const PublicationSchema = new Schema({
     en: { type: String, required: true },
     ar: { type: String, required: true }
   },
+  typeKey: {
+    type: String,
+    default: "report",
+    lowercase: true,
+    trim: true,
+  },
   type: {
     en: { type: String, default: "Report" },
     ar: { type: String, default: "تقرير" }

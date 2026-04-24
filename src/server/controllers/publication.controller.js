@@ -28,12 +28,17 @@ export const getById = async (req, res) => {
 // إضافة
 export const create = async (req, res) => {
   try {
-    console.log()
+    const parsedType = JSON.parse(req.body.type);
+    const typeKey = parsedType.en
+      ? parsedType.en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+      : "misc";
+
     const data = {
       ...req.body,
       title: JSON.parse(req.body.title),
       description: JSON.parse(req.body.description),
-      type: JSON.parse(req.body.type),
+      type: parsedType,
+      typeKey,
       pdfUrl: req?.file?.path,
     };
 
@@ -52,7 +57,13 @@ export const update = async (req, res) => {
 
     if (body.title) body.title = JSON.parse(body.title);
     if (body.description) body.description = JSON.parse(body.description);
-    if (body.type) body.type = JSON.parse(body.type);
+    if (body.type) {
+      const parsedType = JSON.parse(body.type);
+      body.type = parsedType;
+      body.typeKey = parsedType.en
+        ? parsedType.en.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "")
+        : "misc";
+    }
 
     const updated = await publicationService.updatePublication(
       req.params.id,

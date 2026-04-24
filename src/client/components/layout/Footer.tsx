@@ -27,27 +27,13 @@ export default function Footer() {
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {/* Brand Column */}
           <div className="space-y-4">
-         <div className="flex items-center gap-3">
-<div className="flex items-center gap-3">
-  <img
-    src="/logos/1.webp"
-    alt="FT Logo"
-    className="
-      h-36 w-36
-      object-contain
-      rounded-xl
-    "
-  />
-{/*
-  <span className="text-xl font-semibold text-foreground">
-    {t('home.hero.title')}
-  </span>*/}
-</div>
-
-
-</div>
-
-            
+            <Link to="/" className="inline-block">
+              <img
+                src="/logos/1.webp"
+                alt="Finance Scouts"
+                className="h-28 w-28 object-contain rounded-2xl"
+              />
+            </Link>
             <p className="text-sm text-primary-foreground/80">
               {t('footer.description')}
             </p>

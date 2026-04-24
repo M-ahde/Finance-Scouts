@@ -15,7 +15,8 @@ const departments = [
   { key: 'documentation', icon: BookOpen },
 ];
 export default function Team() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const currentLang = i18n.language || 'en';
   const [teamMembers, setTeamMembers] = useState([]);
 
   useEffect(() => {
@@ -24,6 +25,11 @@ export default function Team() {
       .then(data => setTeamMembers(data))
       .catch(err => console.error('Error fetching team:', err));
   }, []);
+
+  const getLocalizedValue = (value: string | { en: string; ar: string }): string => {
+    if (typeof value === 'string') return value;
+    return value?.[currentLang] || value?.en || '';
+  };
 
   return (
     <PageLayout>
@@ -60,8 +66,8 @@ export default function Team() {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
               >
                 <TeamMemberCard
-                  name={member.name}
-                  role={member.role}
+                  name={getLocalizedValue(member.name)}
+                  role={getLocalizedValue(member.role)}
                   image={member.avatar}
                 />
               </motion.div>

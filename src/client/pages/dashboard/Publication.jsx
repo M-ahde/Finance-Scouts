@@ -139,20 +139,50 @@ const PublicationEditor = () => {
               />
             </div>
 
-            {/* Type */}
-            <div>
-              <label className="block text-sm font-medium mb-2">
-                Type
-              </label>
+            {/* Type - Single input with language switch */}
+            <div className="space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="block text-sm font-medium">
+                  Type
+                </label>
+                <div className="flex gap-1">
+                  <button
+                    type="button"
+                    onClick={() => setActiveLang("en")}
+                    className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                      activeLang === "en"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    }`}
+                  >
+                    EN
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setActiveLang("ar")}
+                    className={`px-3 py-1 text-xs rounded-md transition-colors ${
+                      activeLang === "ar"
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-muted text-muted-foreground hover:bg-muted/80"
+                    }`}
+                  >
+                    العربية
+                  </button>
+                </div>
+              </div>
               <input
+                key={activeLang}
                 className="w-full p-3 border rounded-xl"
-                value={formData.type.en}
+                placeholder={activeLang === "en" ? "e.g., Report, Article, Study" : "مثال: تقرير، مقال، دراسة"}
+                value={formData.type[activeLang]}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    type: { ...formData.type, en: e.target.value }
+                    type: { ...formData.type, [activeLang]: e.target.value }
                   })
                 }
+                dir={activeLang === "ar" ? "rtl" : "ltr"}
+                autoFocus
               />
             </div>
 

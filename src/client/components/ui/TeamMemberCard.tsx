@@ -3,8 +3,8 @@ import { Card, CardContent } from '@/client/components/ui/card';
 import { cn } from '@/client/lib/utils';
 
 interface TeamMemberCardProps {
-  name: string;
-  role: string;
+  name: string | { en: string; ar: string };
+  role: string | { en: string; ar: string };
   image?: string;
   className?: string;
 }
@@ -15,6 +15,11 @@ export default function TeamMemberCard({
   image,
   className,
 }: TeamMemberCardProps) {
+  const getLocalizedValue = (value: string | { en: string; ar: string }, lang: string): string => {
+    if (typeof value === 'string') return value;
+    return value?.[lang] || value?.en || '';
+  };
+
   return (
     <Card className={cn('overflow-hidden transition-shadow hover:shadow-lg', className)}>
       <CardContent className="p-6 text-center">
@@ -22,8 +27,13 @@ export default function TeamMemberCard({
           {image ? (
             <img
               src={image}
-              alt={name}
+              alt={typeof name === 'string' ? name : name.en}
               className="h-full w-full rounded-full object-cover"
+              onError={(e) => {
+                const target = e.target as HTMLImageElement;
+                target.style.display = 'none';
+                target.parentElement?.querySelector('div')?.classList.remove('hidden');
+              }}
             />
           ) : (
             <User className="h-12 w-12 text-muted-foreground" />

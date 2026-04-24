@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route, useLocation, useNavigationType } from "react-router-dom";
 import { lazy, Suspense, useEffect, useState } from "react";
 import '@/client/lib/i18n';
+import { LanguageProvider } from '@/client/context/LanguageContext';
 
 import PageLoader from "@/client/components/ui/PageLoader.jsx";
 
@@ -76,51 +77,53 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <BrowserRouter>
-          <NavProgress />
-          <Suspense fallback={<PageLoader />}>
-            <Routes>
-              {/* Public */}
-              <Route path="/"            element={<Home />} />
-              <Route path="/about"       element={<About />} />
-              <Route path="/goals"       element={<Goals />} />
-              <Route path="/vision"      element={<Vision />} />
-              <Route path="/team"        element={<Team />} />
-              <Route path="/achievements" element={<Achievements />} />
-              <Route path="/publications" element={<Publications />} />
-              <Route path="/workshops"   element={<Workshops />} />
-              <Route path="/join"        element={<Join />} />
-              <Route path="/events/:slug" element={<EventPage />} />
-              <Route path="/login"       element={<Login />} />
-              <Route path="/register"    element={<Register />} />
+      <LanguageProvider>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <BrowserRouter>
+            <NavProgress />
+            <Suspense fallback={<PageLoader />}>
+              <Routes>
+                {/* Public */}
+                <Route path="/"            element={<Home />} />
+                <Route path="/about"       element={<About />} />
+                <Route path="/goals"       element={<Goals />} />
+                <Route path="/vision"      element={<Vision />} />
+                <Route path="/team"        element={<Team />} />
+                <Route path="/achievements" element={<Achievements />} />
+                <Route path="/publications" element={<Publications />} />
+                <Route path="/workshops"   element={<Workshops />} />
+                <Route path="/join"        element={<Join />} />
+                <Route path="/events/:slug" element={<EventPage />} />
+                <Route path="/login"       element={<Login />} />
+                <Route path="/register"    element={<Register />} />
 
-              {/* Dashboard */}
-              <Route path="/dashboard" element={<DashboardLayout />}>
-                <Route index                    element={<DashboardHome />} />
-                <Route path="workshop"          element={<WorkshopsDashboard />} />
-                <Route path="achievements"      element={<AchievementsDashboard />} />
-                <Route path="team"              element={<TeamDashboard />} />
-                <Route path="join-requests"     element={<JoinRequests />} />
-                <Route path="user-permissions"  element={<UserPermissions />} />
-                <Route path="events"            element={<EventsDashboard />} />
-                <Route path="events/new"        element={<EventEditor />} />
-                <Route path="events/edit/:id"   element={<EventEditor />} />
-                <Route path="publications">
-                  <Route index                  element={<PublicationsPage />} />
-                  <Route path="new"             element={<PublicationEditor />} />
-                  <Route path="edit/:id"        element={<PublicationEditor />} />
-                  <Route path="view/:id"        element={<PublicationView />} />
+                {/* Dashboard */}
+                <Route path="/dashboard" element={<DashboardLayout />}>
+                  <Route index                    element={<DashboardHome />} />
+                  <Route path="workshop"          element={<WorkshopsDashboard />} />
+                  <Route path="achievements"      element={<AchievementsDashboard />} />
+                  <Route path="team"              element={<TeamDashboard />} />
+                  <Route path="join-requests"     element={<JoinRequests />} />
+                  <Route path="user-permissions"  element={<UserPermissions />} />
+                  <Route path="events"            element={<EventsDashboard />} />
+                  <Route path="events/new"        element={<EventEditor />} />
+                  <Route path="events/edit/:id"   element={<EventEditor />} />
+                  <Route path="publications">
+                    <Route index                  element={<PublicationsPage />} />
+                    <Route path="new"             element={<PublicationEditor />} />
+                    <Route path="edit/:id"        element={<PublicationEditor />} />
+                    <Route path="view/:id"        element={<PublicationView />} />
+                  </Route>
                 </Route>
-              </Route>
 
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </Suspense>
-        </BrowserRouter>
-      </TooltipProvider>
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </Suspense>
+          </BrowserRouter>
+        </TooltipProvider>
+      </LanguageProvider>
     </QueryClientProvider>
   );
 };

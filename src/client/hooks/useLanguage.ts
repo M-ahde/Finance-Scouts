@@ -1,41 +1,27 @@
 import { useTranslation } from 'react-i18next';
 import { useCallback, useEffect } from 'react';
-
-export type Language = 'en' | 'ar';
+import { useLanguageContext, type Language } from '@/client/context/LanguageContext';
 
 export function useLanguage() {
   const { i18n } = useTranslation();
+  const { language, isRTL, direction, toggleLanguage, setLanguage } = useLanguageContext();
 
-  const currentLanguage = i18n.language as Language;
-  const isRTL = currentLanguage === 'ar';
-  const direction = isRTL ? 'rtl' : 'ltr';
+  const syncLanguage = useCallback(() => {
+    if (i18n.language !== language) {
+      i18n.changeLanguage(language);
+    }
+  }, [i18n, language]);
+
+  useEffect(() => {
+    syncLanguage();
+  }, [syncLanguage]);
 
   const changeLanguage = useCallback((lang: Language) => {
-    i18n.changeLanguage(lang);
-  }, [i18n]);
-
-  const toggleLanguage = useCallback(() => {
-    const newLang = currentLanguage === 'en' ? 'ar' : 'en';
-    changeLanguage(newLang);
-  }, [currentLanguage, changeLanguage]);
-
-  // Update document direction when language changes
-  useEffect(() => {
-    document.documentElement.dir = direction;
-    document.documentElement.lang = currentLanguage;
-    
-    // Update font family based on language
-    if (isRTL) {
-      document.body.classList.add('font-arabic');
-      document.body.classList.remove('font-sans');
-    } else {
-      document.body.classList.add('font-sans');
-      document.body.classList.remove('font-arabic');
-    }
-  }, [direction, currentLanguage, isRTL]);
+    setLanguage(lang);
+  }, [setLanguage]);
 
   return {
-    currentLanguage,
+    currentLanguage: language,
     isRTL,
     direction,
     changeLanguage,

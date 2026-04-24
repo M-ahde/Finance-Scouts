@@ -1,12 +1,20 @@
-// src/server/models/TeamMember.ts
 import mongoose, { Schema } from "mongoose";
 
 const TeamMemberSchema = new Schema(
   {
-    name: { type: String, required: true },
-    role: { type: String, required: true },
-    department: String,
-    avatar: String,
+    name: {
+      en: { type: String, required: true },
+      ar: { type: String, required: true },
+    },
+    role: {
+      en: { type: String, required: true },
+      ar: { type: String, required: true },
+    },
+    department: {
+      en: { type: String, default: "" },
+      ar: { type: String, default: "" },
+    },
+    avatar: { type: String, default: "" },
   },
   { timestamps: true }
 );

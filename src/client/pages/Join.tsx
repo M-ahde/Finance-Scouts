@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
@@ -7,6 +7,7 @@ import { z } from 'zod';
 import { CheckCircle, Sparkles } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'sonner';
+import axios from 'axios';
 import PageLayout from '@/client/components/layout/PageLayout';
 import { Button } from '@/client/components/ui/button';
 import { Input } from '@/client/components/ui/input';
@@ -29,14 +30,32 @@ import {
 import { createJoinRequest } from '@/client/services/joinRequest';
 import { DropdownMenu, DropdownMenuCheckboxItem, DropdownMenuContent, DropdownMenuTrigger } from '../components/ui/dropdown-menu';
 import { Badge } from '../components/ui/badge';
+import { useLanguage } from '@/client/hooks/useLanguage';
 
 
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function Join() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
+  const { currentLanguage } = useLanguage();
   const benefits = t('join.benefits.items', { returnObjects: true }) as string[];
+  const [levels, setLevels] = useState<{ en: string; ar: string }[]>([]);
+
+  useEffect(() => {
+    axios.get('/api/v1/join/levels')
+      .then(res => setLevels(res.data))
+      .catch(err => {
+        console.error('Failed to load levels:', err);
+        setLevels([
+          { en: 'Level 1', ar: 'المستوى الأول' },
+          { en: 'Level 2', ar: 'المستوى الثاني' },
+          { en: 'Level 3', ar: 'المستوى الثالث' },
+          { en: 'Level 4', ar: 'المستوى الرابع' },
+          { en: 'Level 5', ar: 'المستوى الخامس' },
+        ]);
+      });
+  }, []);
 
 const formSchema = z.object({
   arabicName: z
@@ -287,11 +306,11 @@ const onSubmit = async (data: FormValues) => {
                                   </SelectTrigger>
                                 </FormControl>
                                 <SelectContent>
-                                  <SelectItem value="1">{t('join.levels.first')}</SelectItem>
-                                  <SelectItem value="2">{t('join.levels.second')}</SelectItem>
-                                  <SelectItem value="3">{t('join.levels.third')}</SelectItem>
-                                  <SelectItem value="4">{t('join.levels.fourth')}</SelectItem>
-                                  <SelectItem value="5">{t('join.levels.fifth')}</SelectItem>
+                                  {levels.map((level, index) => (
+                                    <SelectItem key={index} value={String(index + 1)}>
+                                      {level[currentLanguage] || level.en}
+                                    </SelectItem>
+                                  ))}
                                 </SelectContent>
                               </Select>
                               <FormMessage />

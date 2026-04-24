@@ -104,6 +104,22 @@ const config = {
   cors: {
     origin: getEnv("CORS_ORIGIN", "*"),
   },
+
+  /**
+   * Join application configuration
+   */
+  join: {
+    /**
+     * Academic levels (comma-separated, default 10 levels)
+     * Format: en_label_1,ar_label_1|en_label_2,ar_label_2|...
+     */
+    levels: getEnv("JOIN_LEVELS", 
+      "Level 1,المستوى الأول|Level 2,المستوى الثاني|Level 3,المستوى الثالث|Level 4,المستوى الرابع|Level 5,المستوى الخامس|Level 6,المستوى السادس|Level 7,المستوى السابع|Level 8,المستوى الثامن|Level 9,المستوى التاسع|Level 10,المستوى العاشر"
+    ).split("|").map(level => {
+      const [en, ar] = level.split(",");
+      return { en: en?.trim() || "", ar: ar?.trim() || "" };
+    }),
+  },
 };
 
 export default config;

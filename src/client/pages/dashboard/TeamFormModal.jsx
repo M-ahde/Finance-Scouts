@@ -5,19 +5,34 @@ import { Button } from "@/client/components/ui/button";
 import { Input } from "@/client/components/ui/input";
 import { Label } from "@/client/components/ui/label";
 import { toast } from "sonner";
+import { useLanguage } from "@/client/hooks/useLanguage";
 
 export default function TeamFormModal({ open, setOpen, editing, refresh }) {
+  const { currentLanguage, isRTL, changeLanguage } = useLanguage();
   const [form, setForm] = useState({
-    name: "",
-    role: "",
-    department: "",
+    name: { en: "", ar: "" },
+    role: { en: "", ar: "" },
+    department: { en: "", ar: "" },
     avatar: "",
   });
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (editing) setForm(editing);
-    else setForm({ name: "", role: "", department: "", avatar: "" });
+    if (editing) {
+      setForm({
+        name: editing.name || { en: "", ar: "" },
+        role: editing.role || { en: "", ar: "" },
+        department: editing.department || { en: "", ar: "" },
+        avatar: editing.avatar || "",
+      });
+    } else {
+      setForm({
+        name: { en: "", ar: "" },
+        role: { en: "", ar: "" },
+        department: { en: "", ar: "" },
+        avatar: "",
+      });
+    }
   }, [editing]);
 
   const handleSubmit = async (e) => {
@@ -42,54 +57,74 @@ export default function TeamFormModal({ open, setOpen, editing, refresh }) {
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <h2 className="text-2xl font-bold mb-6 text-center">
           {editing ? "Edit Team Member" : "Add New Team Member"}
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-5">
-          {/* Name */}
+          <div className="flex gap-2 mb-4">
+            <Button
+              type="button"
+              variant={currentLanguage === "en" ? "default" : "outline"}
+              size="sm"
+              onClick={() => changeLanguage("en")}
+              className="flex-1"
+            >
+              English
+            </Button>
+            <Button
+              type="button"
+              variant={currentLanguage === "ar" ? "default" : "outline"}
+              size="sm"
+              onClick={() => changeLanguage("ar")}
+              className="flex-1"
+            >
+              العربية
+            </Button>
+          </div>
+
           <div>
             <Label htmlFor="name" className="mb-1 block text-sm font-medium text-muted-foreground">
               Name <span className="text-red-500">*</span>
             </Label>
             <Input
               id="name"
-              placeholder="Enter full name"
-              value={form.name}
-              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              placeholder={currentLanguage === "en" ? "Enter name" : "أدخل الاسم"}
+              value={form.name[currentLanguage]}
+              onChange={(e) => setForm({ ...form, name: { ...form.name, [currentLanguage]: e.target.value } })}
               required
+              dir={isRTL ? "rtl" : "ltr"}
             />
           </div>
 
-          {/* Role */}
           <div>
             <Label htmlFor="role" className="mb-1 block text-sm font-medium text-muted-foreground">
               Role <span className="text-red-500">*</span>
             </Label>
             <Input
               id="role"
-              placeholder="Enter role (e.g., President)"
-              value={form.role}
-              onChange={(e) => setForm({ ...form, role: e.target.value })}
+              placeholder={currentLanguage === "en" ? "e.g., President, Manager" : "مثال: رئيس، مدير"}
+              value={form.role[currentLanguage]}
+              onChange={(e) => setForm({ ...form, role: { ...form.role, [currentLanguage]: e.target.value } })}
               required
+              dir={isRTL ? "rtl" : "ltr"}
             />
           </div>
 
-          {/* Department */}
           <div>
             <Label htmlFor="department" className="mb-1 block text-sm font-medium text-muted-foreground">
               Department
             </Label>
             <Input
               id="department"
-              placeholder="Enter department"
-              value={form.department}
-              onChange={(e) => setForm({ ...form, department: e.target.value })}
+              placeholder={currentLanguage === "en" ? "e.g., Marketing, IT" : "مثال: التسويق، تقنية المعلومات"}
+              value={form.department[currentLanguage]}
+              onChange={(e) => setForm({ ...form, department: { ...form.department, [currentLanguage]: e.target.value } })}
+              dir={isRTL ? "rtl" : "ltr"}
             />
           </div>
 
-          {/* Avatar */}
           <div>
             <Label htmlFor="avatar" className="mb-1 block text-sm font-medium text-muted-foreground">
               Avatar URL
@@ -101,13 +136,15 @@ export default function TeamFormModal({ open, setOpen, editing, refresh }) {
               onChange={(e) => setForm({ ...form, avatar: e.target.value })}
             />
 
-            {/* Preview */}
             {form.avatar && (
               <div className="mt-3 flex justify-center">
                 <img
                   src={form.avatar}
                   alt="Avatar Preview"
                   className="w-24 h-24 rounded-full object-cover border border-slate-200 shadow-sm"
+                  onError={(e) => {
+                    e.target.style.display = "none";
+                  }}
                 />
               </div>
             )}
