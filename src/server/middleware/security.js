@@ -8,7 +8,14 @@ import rateLimit from "express-rate-limit";
  */
 export const securityMiddleware = [
   // Helmet middleware for securing HTTP headers
-  helmet(),
+  helmet({
+    contentSecurityPolicy: {
+      directives: {
+        ...helmet.contentSecurityPolicy.getDefaultDirectives(),
+        "script-src": ["'self'", "https://static.cloudflareinsights.com"],
+      },
+    },
+  }),
 
   // Rate limiting to prevent abuse
   rateLimit({

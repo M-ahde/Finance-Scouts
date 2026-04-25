@@ -44,10 +44,8 @@ const EventsDashboard      = lazy(() => import("./pages/dashboard/EventsDashboar
 const EventEditor          = lazy(() => import("./pages/dashboard/EventEditor"));
 
 // ── Protected Route ───────────────────────
-const ProtectedRoute = ({ children }) => {
-  const isLoggedIn = document.cookie.includes("scc-code"); // عدلها حسب نظامك
-  return isLoggedIn ? children : <Login />;
-};
+// Auth is enforced by DashboardPageLayout via /api/v1/auth/me
+const ProtectedRoute = ({ children }) => children;
 
 // ── Nav Progress ─────────────────────────
 function NavProgress() {
