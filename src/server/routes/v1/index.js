@@ -1,6 +1,5 @@
 import { Router } from "express";
 import errorHandler from "strong-error-handler";
-import { verifySMTPConnection } from "../../services/email.service.js";
 
 import roadmapRoutes from "./roadmap.routes.js";
 import achievementRoutes from "./achievement.routes.js";
@@ -32,17 +31,12 @@ router.get("/health", (req, res) => {
   res.json({ status: "ok", timestamp: new Date().toISOString() });
 });
 
-router.get("/health/email", async (req, res) => {
-  try {
-    const result = await verifySMTPConnection();
-    res.json(result);
-  } catch (err) {
-    res.status(500).json({ 
-      success: false, 
-      message: err.message,
-      code: err.code 
-    });
-  }
+router.get("/health/email", (req, res) => {
+  const configured = !!process.env.SMTP;
+  res.status(configured ? 200 : 500).json({
+    success: configured,
+    message: configured ? "Email API key is configured" : "SMTP env variable is not set",
+  });
 });
 
 router.use(
