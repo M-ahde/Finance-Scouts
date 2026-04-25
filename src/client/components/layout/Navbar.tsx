@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { Menu, X, Globe, ChevronDown } from 'lucide-react';
@@ -14,10 +14,7 @@ import {
 } from '@/client/components/ui/dropdown-menu';
 
 const navItems = [
-  {
-    key: 'home',
-    path: '/',
-  },
+  { key: 'home', path: '/' },
   {
     key: 'projects',
     subItems: [
@@ -40,82 +37,46 @@ const navItems = [
 export default function Navbar() {
   const { t } = useTranslation();
   const { currentLanguage, changeLanguage, isRTL } = useLanguage();
+  const toggleLanguage = () => changeLanguage(currentLanguage === 'en' ? 'ar' : 'en');
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
-  const mobileMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
   useEffect(() => {
-    setMobileOpen(false);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && mobileOpen) {
-        setMobileOpen(false);
-      }
-    };
-    document.addEventListener('keydown', handleEscape);
-    return () => document.removeEventListener('keydown', handleEscape);
+    document.body.style.overflow = mobileOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
   }, [mobileOpen]);
-
-  useEffect(() => {
-    if (mobileOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = '';
-    }
-    return () => {
-      document.body.style.overflow = '';
-    };
-  }, [mobileOpen]);
-
-  const toggleMobile = () => setMobileOpen(!mobileOpen);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <nav className="container mx-auto flex h-16 items-center justify-between px-4 md:px-6">
-        <Link to="/" className="flex items-center gap-3 group">
-          <img
-            src="/logos/1.webp"
-            alt="Finance Scouts"
-            className="h-12 w-12 md:h-14 md:w-14 rounded-xl object-contain transition-transform group-hover:scale-105"
-          />
-          <span className="hidden md:block text-lg font-bold text-foreground tracking-tight">
-            Finance Scouts
-          </span>
+
+        {/* Logo */}
+        <Link to="/" className="flex items-center gap-2 group">
+          <img src="/logos/1.webp" alt="Finance Scouts" className="h-10 w-10 rounded-xl object-contain" />
+          <span className="hidden md:block text-base font-bold text-foreground">Finance Scouts</span>
         </Link>
 
+        {/* Desktop nav */}
         <div className="hidden lg:flex items-center gap-1">
           {navItems.map((item) =>
             item.subItems ? (
               <DropdownMenu key={item.key}>
                 <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    className="gap-1 text-sm"
-                  >
+                  <Button variant="ghost" size="sm" className="gap-1 text-sm">
                     {t(`nav.${item.key}`)}
                     <ChevronDown className="h-3 w-3" />
                   </Button>
                 </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  align={isRTL ? 'start' : 'end'}
-                  className="bg-popover/95 p-2 min-w-[200px] rounded-lg shadow-xl"
-                >
+                <DropdownMenuContent align={isRTL ? 'start' : 'end'} className="min-w-[180px]">
                   {item.subItems.map((sub) => (
                     <DropdownMenuItem key={sub.key} asChild>
                       <Link
-                        to={sub.disabled ? '#' : sub.path}
-                        onClick={(e) => sub.disabled && e.preventDefault()}
+                        to={sub.path}
                         className={cn(
-                          'flex w-full cursor-pointer items-center px-3 py-2 rounded-md text-sm transition-colors',
-                          sub.disabled
-                            ? 'pointer-events-none opacity-40 cursor-not-allowed'
-                            : 'hover:bg-muted',
-                          location.pathname === sub.path
-                            ? 'bg-muted font-semibold text-foreground'
-                            : 'text-muted-foreground'
+                          'w-full text-sm',
+                          location.pathname === sub.path && 'font-semibold'
                         )}
                       >
                         {t(`nav.${sub.key}`)}
@@ -130,9 +91,7 @@ export default function Navbar() {
                 to={item.path}
                 className={cn(
                   'px-3 py-2 rounded-md text-sm font-medium transition-colors hover:bg-muted',
-                  location.pathname === item.path
-                    ? 'bg-muted text-foreground font-semibold'
-                    : 'text-muted-foreground'
+                  location.pathname === item.path ? 'bg-muted text-foreground' : 'text-muted-foreground'
                 )}
               >
                 {t(`nav.${item.key}`)}
@@ -141,17 +100,11 @@ export default function Navbar() {
           )}
         </div>
 
+        {/* Right actions */}
         <div className="flex items-center gap-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={toggleLanguage}
-            className="gap-2 min-w-[70px]"
-          >
+          <Button variant="ghost" size="sm" onClick={toggleLanguage} className="gap-1.5 text-xs">
             <Globe className="h-4 w-4" />
-            <span className="hidden sm:inline text-xs font-medium">
-              {currentLanguage === 'en' ? 'EN' : 'عربي'}
-            </span>
+            <span className="hidden sm:inline">{currentLanguage === 'en' ? 'EN' : 'عربي'}</span>
           </Button>
 
           <Link to="/join" className="hidden sm:block">
@@ -160,120 +113,83 @@ export default function Navbar() {
             </Button>
           </Link>
 
-          <Button
-            variant="ghost"
-            size="icon"
-            className="lg:hidden"
-            onClick={toggleMobile}
-            aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
-            aria-expanded={mobileOpen}
+          <button
+            className="lg:hidden p-2 rounded-md hover:bg-muted transition-colors"
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label="Toggle menu"
           >
-            <AnimatePresence mode="wait" initial={false}>
-              {mobileOpen ? (
-                <motion.div
-                  key="close"
-                  initial={{ rotate: -90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: 90, opacity: 0 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  <X className="h-5 w-5" />
-                </motion.div>
-              ) : (
-                <motion.div
-                  key="menu"
-                  initial={{ rotate: 90, opacity: 0 }}
-                  animate={{ rotate: 0, opacity: 1 }}
-                  exit={{ rotate: -90, opacity: 0 }}
-                  transition={{ duration: 0.15 }}
-                >
-                  <Menu className="h-5 w-5" />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </Button>
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
       </nav>
 
+      {/* Mobile menu — simple dropdown */}
       <AnimatePresence>
         {mobileOpen && (
-          <>
-            <motion.div
-              ref={mobileMenuRef}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2, ease: 'easeInOut' }}
-              className="border-t border-border lg:hidden overflow-hidden"
-            >
-              <div className="container mx-auto px-4 py-4 space-y-1">
-                {navItems.map((item) =>
-                  item.subItems ? (
-                    <div key={item.key} className="space-y-1">
-                      <div className="px-3 py-2 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                        {t(`nav.${item.key}`)}
-                      </div>
-                      {item.subItems.map((sub) => (
-                        <Link
-                          key={sub.key}
-                          to={sub.disabled ? '#' : sub.path}
-                          onClick={(e) => {
-                            if (sub.disabled) e.preventDefault();
-                            setMobileOpen(false);
-                          }}
-                          className={cn(
-                            'flex items-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors',
-                            sub.disabled
-                              ? 'pointer-events-none opacity-40'
-                              : 'hover:bg-muted',
-                            location.pathname === sub.path
-                              ? 'bg-muted text-foreground font-semibold'
-                              : 'text-muted-foreground'
-                          )}
-                        >
-                          {t(`nav.${sub.key}`)}
-                        </Link>
-                      ))}
-                    </div>
-                  ) : (
-                    <Link
-                      key={item.key}
-                      to={item.path}
-                      onClick={() => setMobileOpen(false)}
-                      className={cn(
-                        'flex items-center px-3 py-2.5 rounded-md text-sm font-medium transition-colors hover:bg-muted',
-                        location.pathname === item.path
-                          ? 'bg-muted text-foreground font-semibold'
-                          : 'text-muted-foreground'
-                      )}
-                    >
+          <motion.div
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.15 }}
+            className="lg:hidden border-t border-border bg-background"
+          >
+            <div className="container mx-auto px-4 py-3 space-y-0.5">
+
+              {navItems.map((item) =>
+                item.subItems ? (
+                  <div key={item.key}>
+                    <p className="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground">
                       {t(`nav.${item.key}`)}
-                    </Link>
-                  )
-                )}
-
-                <div className="pt-4">
+                    </p>
+                    {item.subItems.map((sub) => (
+                      <Link
+                        key={sub.key}
+                        to={sub.path}
+                        className={cn(
+                          'block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                          location.pathname === sub.path
+                            ? 'bg-accent/10 text-accent'
+                            : 'text-foreground hover:bg-muted'
+                        )}
+                      >
+                        {t(`nav.${sub.key}`)}
+                      </Link>
+                    ))}
+                  </div>
+                ) : (
                   <Link
-                    to="/join"
-                    onClick={() => setMobileOpen(false)}
-                    className="block"
+                    key={item.key}
+                    to={item.path}
+                    className={cn(
+                      'block rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
+                      location.pathname === item.path
+                        ? 'bg-accent/10 text-accent'
+                        : 'text-foreground hover:bg-muted'
+                    )}
                   >
-                    <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90">
-                      {t('nav.join')}
-                    </Button>
+                    {t(`nav.${item.key}`)}
                   </Link>
-                </div>
-              </div>
-            </motion.div>
+                )
+              )}
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="fixed inset-0 top-16 z-40 bg-black/50 lg:hidden"
-              onClick={() => setMobileOpen(false)}
-            />
-          </>
+              {/* Bottom row */}
+              <div className="flex items-center gap-2 pt-3 pb-1 border-t border-border mt-2">
+                <button
+                  onClick={toggleLanguage}
+                  className="flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-medium text-muted-foreground hover:bg-muted hover:text-foreground transition-colors"
+                >
+                  <Globe className="h-4 w-4" />
+                  {currentLanguage === 'en' ? 'عربي' : 'EN'}
+                </button>
+                <Link to="/join" onClick={() => setMobileOpen(false)} className="flex-1">
+                  <Button className="w-full bg-accent text-accent-foreground hover:bg-accent/90 text-sm">
+                    {t('nav.join')}
+                  </Button>
+                </Link>
+              </div>
+
+            </div>
+          </motion.div>
         )}
       </AnimatePresence>
     </header>
