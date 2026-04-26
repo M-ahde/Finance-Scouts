@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import { FiPlus, FiTrash2, FiChevronDown, FiChevronUp, FiEye } from "react-icons/fi";
+import { isValidImageUrl } from "../../lib/imageUtils";
 
 // ─── helpers ──────────────────────────────────────────────────────
 const slugify = (s) =>
@@ -36,7 +37,7 @@ const DESIGNS = [
 ];
 
 // ─── Section wrapper ───────────────────────────────────────────────
-function Section({ title, children, open: openProp, defaultOpen = false }) {
+function Section({ title, children, defaultOpen = false }) {
   const [open, setOpen] = useState(defaultOpen);
   return (
     <div style={{ border: "1px solid #e2e8f0", borderRadius: 14, overflow: "hidden", marginBottom: 16 }}>
@@ -81,6 +82,8 @@ export default function EventEditor() {
 
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState("");
+  const [logoUploading, setLogoUploading] = useState(false);
+  const [coverUploading, setCoverUploading] = useState(false);
   const [form, setForm] = useState({
     title: "",
     slug: "",
@@ -92,6 +95,7 @@ export default function EventEditor() {
     registrationLink: "",
     targetAudience: "",
     coverImage: "",
+    logoUrl: "",
     design: "elegant",
     customCSS: "",
     isPublished: false,
@@ -108,8 +112,8 @@ export default function EventEditor() {
         const d = r.data;
         setForm({
           ...d,
-          date: d.date ? new Date(d.date).toISOString().slice(0, 16) : "",
-          endDate: d.endDate ? new Date(d.endDate).toISOString().slice(0, 16) : "",
+          date:    d.date    ? utcToKSAInput(d.date)    : "",
+          endDate: d.endDate ? utcToKSAInput(d.endDate) : "",
         });
       })
       .catch(() => setError("Failed to load event"));
@@ -120,6 +124,50 @@ export default function EventEditor() {
     setForm(p => ({ ...p, [key]: val }));
     if (key === "title" && !isEdit) {
       setForm(p => ({ ...p, [key]: val, slug: slugify(val) }));
+    }
+  };
+
+  // ── Logo upload
+  const handleLogoUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setLogoUploading(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("logo", file);
+      const { data } = await axios.post("/api/v1/events/upload-logo", fd, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setForm(p => ({ ...p, logoUrl: data.url }));
+    } catch {
+      setError("Logo upload failed. Please try a URL instead.");
+    } finally {
+      setLogoUploading(false);
+      e.target.value = "";
+    }
+  };
+
+  // ── Cover Image upload
+  const handleCoverUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setCoverUploading(true);
+    setError("");
+    try {
+      const fd = new FormData();
+      fd.append("cover", file);
+      const { data } = await axios.post("/api/v1/events/upload-cover", fd, {
+        withCredentials: true,
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      setForm(p => ({ ...p, coverImage: data.url }));
+    } catch {
+      setError("Cover upload failed. Please try a URL instead.");
+    } finally {
+      setCoverUploading(false);
+      e.target.value = "";
     }
   };
 
@@ -152,16 +200,20 @@ export default function EventEditor() {
   const setSponsor = (ti, si, key) => (e) => setForm(p => {
     const ts = [...p.sponsorTiers]; const sponsors = [...ts[ti].sponsors]; sponsors[si] = { ...sponsors[si], [key]: e.target.value }; ts[ti] = { ...ts[ti], sponsors }; return { ...p, sponsorTiers: ts };
   });
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSaving(true);
     try {
+      const payload = {
+        ...form,
+        date:    ksaInputToUTC(form.date),
+        endDate: form.endDate ? ksaInputToUTC(form.endDate) : "",
+      };
       if (isEdit) {
-        await axios.put(`/api/v1/events/${id}`, form, { withCredentials: true });
+        await axios.put(`/api/v1/events/${id}`, payload, { withCredentials: true });
       } else {
-        await axios.post("/api/v1/events", form, { withCredentials: true });
+        await axios.post("/api/v1/events", payload, { withCredentials: true });
       }
       navigate("/dashboard/events");
     } catch (err) {
@@ -170,7 +222,6 @@ export default function EventEditor() {
       setSaving(false);
     }
   };
-
   return (
     <form onSubmit={handleSubmit}>
       {/* Header */}
@@ -223,8 +274,12 @@ export default function EventEditor() {
         </Field>
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 16 }}>
           <Field label="Start Date & Time" required>
-            <Input type="datetime-local" value={form.date} onChange={set("date")} required />
-          </Field>
+<Input
+  type="datetime-local"
+  value={form.date}
+  onChange={set("date")}
+  required
+/>          </Field>
           <Field label="End Date & Time">
             <Input type="datetime-local" value={form.endDate} onChange={set("endDate")} />
           </Field>
@@ -236,10 +291,49 @@ export default function EventEditor() {
           <Field label="Registration Link">
             <Input value={form.registrationLink} onChange={set("registrationLink")} placeholder="https://forms.gle/..." type="url" />
           </Field>
-          <Field label="Cover Image URL">
-            <Input value={form.coverImage} onChange={set("coverImage")} placeholder="https://..." type="url" />
-          </Field>
+          <Field label="Cover Image URL" hint="Shown in the hero section. Upload a file or paste a direct URL.">
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Input
+              value={form.coverImage}
+              onChange={set("coverImage")}
+              placeholder="https://... or upload →"
+              type="url"
+              style={{ ...inp, flex: 1 }}
+            />
+            <label style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: coverUploading ? "#f1f5f9" : "#f8fafc", fontSize: 13, fontWeight: 500, color: "#475569", cursor: coverUploading ? "not-allowed" : "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+              {coverUploading ? "Uploading…" : "Upload File"}
+              <input type="file" accept="image/*" onChange={handleCoverUpload} disabled={coverUploading} style={{ display: "none" }} />
+            </label>
+          </div>
+          {form.coverImage && isValidImageUrl(form.coverImage) && (
+            <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 12 }}>
+              <img src={form.coverImage} alt="Cover preview" style={{ height: 80, maxWidth: 200, objectFit: "cover", borderRadius: 8, border: "1px solid #e2e8f0", padding: 4, background: "#f8fafc" }} onError={(e) => { e.target.style.display = "none"; }} />
+              <button type="button" onClick={() => setForm(p => ({ ...p, coverImage: "" }))} style={{ fontSize: 12, color: "#dc2626", background: "none", border: "none", cursor: "pointer", padding: 0 }}>Remove</button>
+            </div>
+          )}
+        </Field>
         </div>
+
+        <Field label="Event Logo" hint="Shown in the navbar. Upload a file or paste a direct URL.">
+          <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+            <Input
+              value={form.logoUrl}
+              onChange={set("logoUrl")}
+              placeholder="https://... or upload →"
+              style={{ ...inp, flex: 1 }}
+            />
+            <label style={{ display: "inline-flex", alignItems: "center", gap: 6, padding: "9px 14px", borderRadius: 8, border: "1.5px solid #e2e8f0", background: logoUploading ? "#f1f5f9" : "#f8fafc", fontSize: 13, fontWeight: 500, color: "#475569", cursor: logoUploading ? "not-allowed" : "pointer", whiteSpace: "nowrap", flexShrink: 0 }}>
+              {logoUploading ? "Uploading…" : "Upload File"}
+              <input type="file" accept="image/*" onChange={handleLogoUpload} disabled={logoUploading} style={{ display: "none" }} />
+            </label>
+          </div>
+          {form.logoUrl && (
+            <div style={{ marginTop: 10, display: "flex", alignItems: "center", gap: 12 }}>
+              <img src={form.logoUrl} alt="Logo preview" style={{ height: 56, maxWidth: 160, objectFit: "contain", borderRadius: 8, border: "1px solid #e2e8f0", padding: 4, background: "#f8fafc" }} />
+              <button type="button" onClick={() => setForm(p => ({ ...p, logoUrl: "" }))} style={{ fontSize: 12, color: "#dc2626", background: "none", border: "none", cursor: "pointer", padding: 0 }}>Remove</button>
+            </div>
+          )}
+        </Field>
       </Section>
 
       {/* ── About ── */}
@@ -401,3 +495,16 @@ const addBtn = {
   background: "#f8fafc", color: "#475569", cursor: "pointer", fontSize: 13,
   fontWeight: 500, transition: "border-color 0.2s",
 };
+
+
+// Converts a UTC ISO string from the backend → "YYYY-MM-DDTHH:mm" in KSA (UTC+3) for datetime-local inputs.
+function utcToKSAInput(utcString) {
+  const ksa = new Date(new Date(utcString).getTime() + 3 * 60 * 60 * 1000);
+  return ksa.toISOString().slice(0, 16);
+}
+
+// Converts a "YYYY-MM-DDTHH:mm" value (entered as KSA time) back to a UTC ISO string for the backend.
+function ksaInputToUTC(ksaLocal) {
+  return new Date(ksaLocal + ":00.000+03:00").toISOString();
+}
+

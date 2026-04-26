@@ -51,10 +51,11 @@ const EventSchema = new mongoose.Schema({
   // Appearance
   design: {
     type: String,
-    enum: ["elegant", "vibrant", "minimal", "custom"],
+    enum: ["elegant", "vibrant", "minimal", "corporate", "midnight", "emerald", "sunset", "ocean", "purpleRain", "carbon", "roseGold", "arctic", "forest", "retro", "neon", "cream", "custom"],
     default: "elegant",
   },
   customCSS: { type: String, default: "" },
+  logoUrl: { type: String },
 
   isPublished: { type: Boolean, default: false },
   coverImage: { type: String },

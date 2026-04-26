@@ -2,6 +2,8 @@ import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
 import { FiClock, FiMapPin, FiCalendar, FiUsers, FiChevronRight, FiMenu, FiX } from "react-icons/fi";
+import { isValidImageUrl, getImageWithFallback } from "../lib/imageUtils";
+import ImageWithFallback from "../components/ui/ImageWithFallback";
 
 // ─── 16 Built-in Themes ───────────────────────────────────────────
 export const THEMES = {
@@ -250,11 +252,12 @@ function EventNavbar({ event, t }) {
     }}>
       <div style={{ maxWidth: 1100, margin: "0 auto", padding: "0 24px", height: 60, display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
         {/* Logo + Title */}
-        <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
-          <img src="/logos/1.webp" alt="FS" style={{ width: 32, height: 32, borderRadius: "50%", objectFit: "cover" }} />
-          <span style={{ fontWeight: 700, fontSize: 14, color: t.navText, maxWidth: 200, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            {event.title}
-          </span>
+        <Link style={{ display: "flex", alignItems: "center", gap: 10, textDecoration: "none", flexShrink: 0 }}>
+          <ImageWithFallback 
+            src={getImageWithFallback(event.logoUrl, '/Beyond.svg')} 
+            alt={event.title} 
+            style={{ width: 70, height: 70, objectFit: "contain" }} 
+          />
         </Link>
 
         {/* Desktop links */}
@@ -372,9 +375,10 @@ export default function EventPage() {
 
   const eventDate  = new Date(event.date);
   const sortedTiers = [...(event.sponsorTiers || [])].sort((a, b) => a.order - b.order);
-
   return (
-    <div id="event-page" className="ep-root" style={{ background: t.sectionBg, color: t.text, fontFamily: t.font, minHeight: "100vh" }}>
+    <div
+    dir="ltr"
+    id="event-page" className="ep-root" style={{ background: t.sectionBg, color: t.text, fontFamily: t.font, minHeight: "100vh" }}>
 
       {/* ── Navbar ── */}
       <EventNavbar event={event} t={t} />
@@ -391,8 +395,13 @@ export default function EventPage() {
             <span style={{ color: t.accent }}>Event</span>
           </div>
 
-          {event.coverImage && (
-            <img className="ep-cover" src={event.coverImage} alt={event.title} style={{ width: "100%", maxHeight: 320, objectFit: "cover", borderRadius: 16, marginBottom: 32, boxShadow: "0 8px 40px rgba(0,0,0,0.4)" }} />
+          {event.coverImage && isValidImageUrl(event.coverImage) && (
+            <ImageWithFallback 
+              className="ep-cover" 
+              src={event.coverImage} 
+              alt={event.title} 
+              style={{ width: "100%", maxHeight: 320, objectFit: "cover", borderRadius: 16, marginBottom: 32, boxShadow: "0 8px 40px rgba(0,0,0,0.4)" }} 
+            />
           )}
 
           <h1 className="ep-hero-title" style={{ fontSize: "clamp(28px,5vw,52px)", fontWeight: 900, lineHeight: 1.1, margin: "0 0 20px", color: t.text }}>
@@ -403,8 +412,8 @@ export default function EventPage() {
           </p>
 
           <div className="ep-meta" style={{ display: "flex", flexWrap: "wrap", gap: 12, marginBottom: 40 }}>
-            <MetaChip icon={<FiCalendar />} text={eventDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" })} t={t} />
-            <MetaChip icon={<FiClock />} text={eventDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" })} t={t} />
+            <MetaChip icon={<FiCalendar />} text={eventDate.toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric", timeZone: "Asia/Riyadh" })} t={t} />
+            <MetaChip icon={<FiClock />} text={eventDate.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", timeZone: "Asia/Riyadh" })} t={t} />
             {event.location && <MetaChip icon={<FiMapPin />} text={event.location} t={t} />}
           </div>
 
@@ -481,8 +490,13 @@ export default function EventPage() {
                   onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; e.currentTarget.style.borderColor = t.accent; }}
                   onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.borderColor = t.cardBorder; }}
                 >
-                  {sp.photo ? (
-                    <img src={sp.photo} alt={sp.name} className="ep-speaker-photo" style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", border: `2px solid ${t.accent}` }} />
+                  {sp.photo && isValidImageUrl(sp.photo) ? (
+                    <ImageWithFallback 
+                      src={sp.photo} 
+                      alt={sp.name} 
+                      className="ep-speaker-photo" 
+                      style={{ width: 80, height: 80, borderRadius: "50%", objectFit: "cover", border: `2px solid ${t.accent}` }} 
+                    />
                   ) : (
                     <div className="ep-speaker-avatar" style={{ width: 80, height: 80, borderRadius: "50%", background: t.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 30, color: t.accent, fontWeight: 700, border: `2px solid ${t.accent}30` }}>
                       {sp.name[0]}
@@ -540,8 +554,12 @@ export default function EventPage() {
                           onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-3px)"; e.currentTarget.style.borderColor = t.accent; }}
                           onMouseLeave={e => { e.currentTarget.style.transform = ""; e.currentTarget.style.borderColor = t.cardBorder; }}
                         >
-                          {sp.logo ? (
-                            <img src={sp.logo} alt={sp.name} style={{ height: 48, maxWidth: 120, objectFit: "contain" }} />
+                          {sp.logo && isValidImageUrl(sp.logo) ? (
+                            <ImageWithFallback 
+                              src={sp.logo} 
+                              alt={sp.name} 
+                              style={{ height: 48, maxWidth: 120, borderRadius: 10,objectFit: "contain" }} 
+                            />
                           ) : (
                             <div style={{ width: 48, height: 48, borderRadius: 10, background: t.accentSoft, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, color: t.accent, fontWeight: 700 }}>
                               {sp.name[0]}

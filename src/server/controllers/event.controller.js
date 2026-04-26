@@ -78,3 +78,13 @@ export const remove = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+export const uploadLogo = (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file provided" });
+  res.json({ url: req.file.path });
+};
+
+export const uploadCover = (req, res) => {
+  if (!req.file) return res.status(400).json({ message: "No file provided" });
+  res.json({ url: req.file.path });
+};

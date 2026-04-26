@@ -41,16 +41,16 @@ const DashboardLayout = () => {
   const toggleSidebar = () => setCollapsed(!collapsed);
   const toggleMobile = () => setToggled(!toggled);
 
-  // إذا لم يتم تحميل بيانات المستخدم بعد
   if (loading) return <div>Loading...</div>;
 
-  // مثال: فحص صلاحية للوصول للـ Dashboard بالكامل
   if (!user.permissions.includes("view_dashboard") && !user.isSuperAdmin) {
     return <div className="text-center p-10">🚫 You do not have permission to access this page</div>;
   }
 
   return (
-    <div style={{ display: "flex", height: "100vh", overflow: "hidden" }}>
+    <div 
+    style={{ display: "flex", height: "100vh", overflow: "hidden" }}
+    dir="ltr">
       <AppSidebar
         collapsed={collapsed}
         toggled={toggled}

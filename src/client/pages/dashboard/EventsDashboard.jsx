@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { FiPlus, FiEdit2, FiTrash2, FiEye, FiEyeOff, FiCalendar, FiExternalLink, FiUsers } from "react-icons/fi";
 import DeleteConfirmModal from "@/client/components/ui/DeleteConfirmModal.jsx";
+import { isValidImageUrl, getImageWithFallback } from "../../lib/imageUtils";
 
 const api = {
   getAll: () => axios.get("/api/v1/events", { withCredentials: true }).then(r => r.data),
@@ -99,8 +100,17 @@ export default function EventsDashboard() {
             return (
               <div key={ev._id} style={{ background: "#fff", borderRadius: 14, border: "1px solid #e2e8f0", padding: "18px 22px", display: "flex", alignItems: "center", gap: 16, flexWrap: "wrap", boxShadow: "0 1px 4px rgba(0,0,0,0.04)" }}>
                 {/* Thumb */}
-                <div style={{ width: 56, height: 56, borderRadius: 10, flexShrink: 0, background: ev.coverImage ? `url(${ev.coverImage}) center/cover` : "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
-                  {!ev.coverImage && "🗓️"}
+                <div style={{ width: 56, height: 56, borderRadius: 10, flexShrink: 0, overflow: "hidden", background: "#f1f5f9", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 24 }}>
+                  {ev.coverImage && isValidImageUrl(ev.coverImage) ? (
+                    <img 
+                      src={ev.coverImage} 
+                      alt="" 
+                      style={{ width: "100%", height: "100%", objectFit: "cover" }}
+                      onError={(e) => { e.target.style.display = "none"; }}
+                    />
+                  ) : (
+                    "🗓️"
+                  )}
                 </div>
 
                 {/* Info */}
